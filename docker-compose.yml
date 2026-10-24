@@ -1,0 +1,99 @@
+# ==============================================================================
+# GreenPulse AI - Docker Compose Production Stack
+# Architecture: Next.js Frontend + FastAPI AI Backend + Qdrant Vector DB
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. Qdrant Vector Database (Industrial RAG & SOP Vector Storage)
+  # ----------------------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:v1.12.0
+    container_name: greenpulse-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    networks:
+      - greenpulse-network
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'cat < /dev/null > /dev/tcp/localhost/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # 2. GreenPulse Backend (FastAPI, Scikit-learn ML Models & Industrial RAG)
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./green-pulse-ai-design/backend
+      dockerfile: Dockerfile
+    container_name: greenpulse-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - DEBUG=True
+      - HOST=0.0.0.0
+      - PORT=8000
+      - QDRANT_URL=http://qdrant:6333
+      - DATABASE_URL=sqlite+aiosqlite:///./greenpulse.db
+      - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://frontend:3000
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - backend_uploads:/app/uploaded_documents
+      - backend_storage:/app/qdrant_storage
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    networks:
+      - greenpulse-network
+
+  # ----------------------------------------------------------------------------
+  # 3. GreenPulse Frontend (Next.js 16 Production Web UI & Dashboard)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./green-pulse-ai-design
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_BASE_URL=
+    container_name: greenpulse-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_API_BASE_URL=
+    depends_on:
+      - backend
+    networks:
+      - greenpulse-network
+
+# ------------------------------------------------------------------------------
+# Persistent Storage Volumes & Network
+# ------------------------------------------------------------------------------
+volumes:
+  qdrant_storage:
+    name: greenpulse_qdrant_storage
+  backend_uploads:
+    name: greenpulse_backend_uploads
+  backend_storage:
+    name: greenpulse_backend_storage
+
+networks:
+  greenpulse-network:
+    name: greenpulse_network
+    driver: bridge

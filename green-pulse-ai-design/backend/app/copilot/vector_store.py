@@ -31,13 +31,23 @@ _SHARED_QDRANT_CLIENT = None
 def get_shared_qdrant_client(storage_path: Path) -> QdrantClient:
     global _SHARED_QDRANT_CLIENT
     if _SHARED_QDRANT_CLIENT is None:
-        try:
-            storage_path.mkdir(parents=True, exist_ok=True)
-            _SHARED_QDRANT_CLIENT = QdrantClient(path=str(storage_path))
-            logger.info(f"Qdrant client initialized with local disk storage at: {storage_path.resolve()}")
-        except Exception as e:
-            logger.warning(f"Could not initialize local disk Qdrant storage: {e}. Using in-memory Qdrant instance.")
-            _SHARED_QDRANT_CLIENT = QdrantClient(location=":memory:")
+        qdrant_url = os.getenv("QDRANT_URL")
+        if qdrant_url:
+            api_key = os.getenv("QDRANT_API_KEY")
+            try:
+                _SHARED_QDRANT_CLIENT = QdrantClient(url=qdrant_url, api_key=api_key)
+                logger.info(f"Qdrant client connected to remote instance at: {qdrant_url}")
+            except Exception as e:
+                logger.warning(f"Could not connect to Qdrant at {qdrant_url}: {e}. Falling back to disk storage.")
+                _SHARED_QDRANT_CLIENT = None
+        if _SHARED_QDRANT_CLIENT is None:
+            try:
+                storage_path.mkdir(parents=True, exist_ok=True)
+                _SHARED_QDRANT_CLIENT = QdrantClient(path=str(storage_path))
+                logger.info(f"Qdrant client initialized with local disk storage at: {storage_path.resolve()}")
+            except Exception as e:
+                logger.warning(f"Could not initialize local disk Qdrant storage: {e}. Using in-memory Qdrant instance.")
+                _SHARED_QDRANT_CLIENT = QdrantClient(location=":memory:")
     return _SHARED_QDRANT_CLIENT
 
 
