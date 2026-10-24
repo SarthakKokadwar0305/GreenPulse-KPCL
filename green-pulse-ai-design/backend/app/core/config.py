@@ -47,7 +47,7 @@ class Settings(BaseSettings):
     # AI Copilot & RAG Pipeline
     QDRANT_PATH: str = "./qdrant_storage"
     OLLAMA_BASE_URL: str = "http://localhost:11434"
-    OLLAMA_MODEL: str = "gemma3:4b"
+    OLLAMA_MODEL: str = "qwen3:8b"
     EMBEDDING_MODEL_NAME: str = "BAAI/bge-m3"
     DOCUMENTS_DIR: str = "./knowledge_documents"
 

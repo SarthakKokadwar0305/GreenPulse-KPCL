@@ -5,6 +5,7 @@ Features dynamic model fallback, resilient offline prompt synthesis, and strict 
 """
 import json
 import logging
+import re
 from typing import Dict, List, Optional, Any
 import httpx
 
@@ -16,17 +17,17 @@ logger = logging.getLogger("greenpulse.copilot.ollama")
 class OllamaService:
     """Interfaces with Ollama HTTP endpoints with automatic model fallback."""
 
-    def __init__(self, base_url: str = "http://localhost:11434", target_model: str = "gemma3:4b"):
-        self.base_url = base_url.rstrip("/")
-        self.target_model = target_model
-        self._active_model = target_model
+    def __init__(self, base_url: Optional[str] = None, target_model: Optional[str] = None):
+        self.base_url = (base_url or settings.OLLAMA_BASE_URL).rstrip("/")
+        self.target_model = target_model or settings.OLLAMA_MODEL
+        self._active_model = self.target_model
         self._available_models: List[str] = []
         self._check_available_models()
 
     def _check_available_models(self):
         """Discovers locally available Ollama models and sets active fallback."""
         try:
-            with httpx.Client(timeout=3.0) as client:
+            with httpx.Client(timeout=4.0) as client:
                 res = client.get(f"{self.base_url}/api/tags")
                 if res.status_code == 200:
                     models = [m.get("name", "") for m in res.json().get("models", [])]
@@ -34,11 +35,11 @@ class OllamaService:
                     logger.info(f"Ollama detected with models: {models}")
 
                     # Check if target model or close variant exists
-                    target_matches = [m for m in models if self.target_model in m or "gemma" in m.lower()]
+                    target_matches = [m for m in models if self.target_model in m or "qwen" in m.lower() or "gemma" in m.lower()]
                     if target_matches:
                         self._active_model = target_matches[0]
+                        logger.info(f"Ollama active model configured: '{self._active_model}'.")
                     elif models:
-                        # Fallback to first available model (e.g. qwen3:8b)
                         self._active_model = models[0]
                         logger.info(f"Target model '{self.target_model}' not found in Ollama. Using active fallback '{self._active_model}'.")
         except Exception as e:
@@ -49,7 +50,7 @@ class OllamaService:
         prompt: str,
         system_prompt: str,
         temperature: float = 0.2
-    ) -> str:
+    ) -> Optional[str]:
         """Sends prompt to Ollama and returns completion string."""
         payload = {
             "model": self._active_model,
@@ -60,11 +61,13 @@ class OllamaService:
                 "temperature": temperature,
                 "top_p": 0.9,
                 "num_predict": 350,
+                "num_ctx": 4096,
             }
         }
 
         try:
-            async with httpx.AsyncClient(timeout=4.0) as client:
+            # 90s client timeout gives local CPU/GPU inference sufficient room without hanging indefinitely
+            async with httpx.AsyncClient(timeout=90.0) as client:
                 res = await client.post(
                     f"{self.base_url}/api/generate",
                     json=payload
@@ -72,10 +75,12 @@ class OllamaService:
                 if res.status_code == 200:
                     data = res.json()
                     response_text = data.get("response", "").strip()
-                    if response_text and len(response_text) > 30:
+                    # Strip internal reasoning/thinking tags emitted by models like Qwen 3 or DeepSeek R1
+                    response_text = re.sub(r"<think>[\s\S]*?</think>", "", response_text).strip()
+                    if response_text and len(response_text) > 25:
                         return response_text
         except Exception as e:
-            logger.info(f"Ollama not available or response timed out ({e}). Utilizing Grounded Industrial Synthesis Engine.")
+            logger.warning(f"Ollama request to {self.base_url} failed or timed out: {e}. Utilizing Grounded Industrial Synthesis Engine.")
 
         return None
 

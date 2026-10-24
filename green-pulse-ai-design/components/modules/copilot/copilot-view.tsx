@@ -71,12 +71,57 @@ const QUICK_PROMPTS = [
   { label: 'BEE PAT Cycle VI compliance & ESCerts', icon: '📜' },
 ]
 
+const renderFormattedText = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+      return (
+        <strong key={i} className="font-semibold text-foreground">
+          {part.slice(2, -2)}
+        </strong>
+      )
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length >= 2) {
+      return (
+        <em key={i} className="italic text-muted-foreground">
+          {part.slice(1, -1)}
+        </em>
+      )
+    }
+    if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
+      return (
+        <code key={i} className="px-1 py-0.5 rounded bg-muted/80 font-mono text-[11px] text-primary">
+          {part.slice(1, -1)}
+        </code>
+      )
+    }
+    return part
+  })
+}
+
+const getApiBase = () => {
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL
+  if (typeof window !== 'undefined' && window.location.hostname) {
+    return `http://${window.location.hostname}:8000`
+  }
+  return 'http://localhost:8000'
+}
+
 export function CopilotView() {
   const user = useAuthStore((state) => state.user)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
-  const [collections, setCollections] = useState<CollectionItem[]>([])
+  const [collections, setCollections] = useState<CollectionItem[]>([
+    { name: 'company_sops', title: 'Company SOPs', vectors_count: 12, status: 'ready' },
+    { name: 'machine_manuals', title: 'Machine Manuals', vectors_count: 11, status: 'ready' },
+    { name: 'government_schemes', title: 'Government Schemes', vectors_count: 6, status: 'ready' },
+    { name: 'iso_50001', title: 'ISO 50001 Documents', vectors_count: 5, status: 'ready' },
+    { name: 'maintenance_docs', title: 'Maintenance Docs', vectors_count: 4, status: 'ready' },
+    { name: 'energy_policies', title: 'Energy Policies', vectors_count: 4, status: 'ready' },
+    { name: 'industrial_standards', title: 'Industrial Standards', vectors_count: 5, status: 'ready' },
+    { name: 'uploaded_pdfs', title: 'Uploaded Documents', vectors_count: 20, status: 'ready' },
+  ])
   const [sessionId] = useState(() => `sess-${Math.random().toString(36).substring(2, 9)}`)
   const [uploadCollection, setUploadCollection] = useState('uploaded_pdfs')
   const [uploading, setUploading] = useState(false)
@@ -92,7 +137,7 @@ export function CopilotView() {
       {
         id: 'welcome-1',
         role: 'assistant',
-        content: `### Welcome to GreenPulse AI Copilot\n\nI am your **Industrial AI Copilot** powered by **Gemma 3 4B Instruct**, **Qdrant Vector DB**, and live factory SCADA Modbus feeds.\n\nI can assist you with:\n1. **Live Operational Telemetry**: Real-time energy spikes, machine health scores, active alerts, and 24h forecasts.\n2. **Company Documents & SOPs (RAG)**: Peak demand curtailment protocols, ISO 50001 EnPI standards, OEM manuals, and BEE PAT compliance.\n3. **Industrial AI Concepts**: Power factor correction, load factor, SHAP explainability, Isolation Forest, and Predictive Maintenance.\n\n*Select a prompt below or type your operational question to begin.*`,
+        content: `### Welcome to GreenPulse AI Copilot\n\nI am your **Industrial AI Copilot** powered by **Qwen 3 8B Instruct**, **Qdrant Vector DB**, and live factory SCADA Modbus feeds.\n\nI can assist you with:\n1. **Live Operational Telemetry**: Real-time energy spikes, machine health scores, active alerts, and 24h forecasts.\n2. **Company Documents & SOPs (RAG)**: Peak demand curtailment protocols, ISO 50001 EnPI standards, OEM manuals, and BEE PAT compliance.\n3. **Industrial AI Concepts**: Power factor correction, load factor, SHAP explainability, Isolation Forest, and Predictive Maintenance.\n\n*Select a prompt below or type your operational question to begin.*`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         citations: [],
       },
@@ -126,26 +171,18 @@ export function CopilotView() {
 
   const fetchCollections = async () => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+      const apiBase = getApiBase()
       const res = await fetch(`${apiBase}/api/v1/copilot/collections`, {
         headers: getAuthHeaders(),
       })
       if (res.ok) {
         const json = await res.json()
-        if (json.data) setCollections(json.data)
+        if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+          setCollections(json.data)
+        }
       }
-    } catch {
-      // Fallback collections display if offline
-      setCollections([
-        { name: 'company_sops', title: 'Company SOPs', vectors_count: 8, status: 'ready' },
-        { name: 'machine_manuals', title: 'Machine Manuals', vectors_count: 12, status: 'ready' },
-        { name: 'government_schemes', title: 'Government Schemes', vectors_count: 6, status: 'ready' },
-        { name: 'iso_50001', title: 'ISO 50001 Documents', vectors_count: 7, status: 'ready' },
-        { name: 'maintenance_docs', title: 'Maintenance Docs', vectors_count: 5, status: 'ready' },
-        { name: 'energy_policies', title: 'Energy Policies', vectors_count: 5, status: 'ready' },
-        { name: 'industrial_standards', title: 'Industrial Standards', vectors_count: 4, status: 'ready' },
-        { name: 'uploaded_pdfs', title: 'Uploaded Documents', vectors_count: 0, status: 'ready' },
-      ])
+    } catch (e) {
+      console.warn('Could not refresh Qdrant collections from API, keeping current state:', e)
     }
   }
 
@@ -166,7 +203,7 @@ export function CopilotView() {
     setLoading(true)
 
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+      const apiBase = getApiBase()
       const res = await fetch(`${apiBase}/api/v1/copilot/chat`, {
         method: 'POST',
         headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
@@ -221,7 +258,7 @@ export function CopilotView() {
 
   const handleClearChat = async () => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+      const apiBase = getApiBase()
       await fetch(`${apiBase}/api/v1/copilot/history/${sessionId}`, {
         method: 'DELETE',
         headers: getAuthHeaders(),
@@ -257,7 +294,7 @@ export function CopilotView() {
     formData.append('collection', uploadCollection)
 
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+      const apiBase = getApiBase()
       const res = await fetch(`${apiBase}/api/v1/copilot/upload`, {
         method: 'POST',
         headers: getAuthHeaders(),
@@ -288,7 +325,7 @@ export function CopilotView() {
   const handleReindex = async () => {
     setReindexing(true)
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+      const apiBase = getApiBase()
       const res = await fetch(`${apiBase}/api/v1/copilot/reindex`, {
         method: 'POST',
         headers: getAuthHeaders(),
@@ -443,41 +480,71 @@ export function CopilotView() {
 
                     {/* Message Body with Markdown styling */}
                     <div className="prose prose-invert prose-xs max-w-none space-y-2 leading-relaxed">
-                      {msg.content.split('\n\n').map((block, idx) => {
-                        if (block.startsWith('### ')) {
+                      {msg.content.replace(/\r\n/g, '\n').split('\n\n').map((block, idx) => {
+                        const lines = block.trim().split('\n').filter((l) => l.trim().length > 0)
+                        if (lines.length === 0) return null
+                        const firstLine = lines[0].trim()
+
+                        if (firstLine.startsWith('### ')) {
+                          const headingText = firstLine.replace('### ', '').trim()
+                          const restLines = lines.slice(1)
+
                           return (
-                            <h4
-                              key={idx}
-                              className="text-xs font-bold text-primary uppercase tracking-wide mt-3 mb-1 flex items-center gap-1.5"
-                            >
-                              <ChevronRight className="size-3.5 text-primary" />
-                              {block.replace('### ', '')}
-                            </h4>
+                            <div key={idx} className="space-y-1.5 mt-3 mb-2">
+                              <h4 className="text-xs font-bold text-primary uppercase tracking-wide flex items-center gap-1.5">
+                                <ChevronRight className="size-3.5 text-primary shrink-0" />
+                                <span>{headingText}</span>
+                              </h4>
+                              {restLines.length > 0 && (
+                                <div className="space-y-1">
+                                  {restLines.some((l) => l.trim().startsWith('- ')) ? (
+                                    <ul className="list-disc pl-4 space-y-1 text-xs">
+                                      {restLines.map((l, liIdx) => (
+                                        <li key={liIdx}>{renderFormattedText(l.replace(/^-\s*/, ''))}</li>
+                                      ))}
+                                    </ul>
+                                  ) : restLines.some((l) => /^\d+\.\s*/.test(l.trim())) ? (
+                                    <ol className="list-decimal pl-4 space-y-1 text-xs">
+                                      {restLines.map((l, liIdx) => (
+                                        <li key={liIdx}>{renderFormattedText(l.replace(/^\d+\.\s*/, ''))}</li>
+                                      ))}
+                                    </ol>
+                                  ) : (
+                                    restLines.map((l, pIdx) => (
+                                      <p key={pIdx} className="text-xs leading-5 text-foreground/90">
+                                        {renderFormattedText(l)}
+                                      </p>
+                                    ))
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           )
                         }
-                        if (block.startsWith('1. ') || block.startsWith('2. ') || block.startsWith('3. ')) {
-                          const items = block.split('\n')
+
+                        if (lines.some((l) => /^\d+\.\s*/.test(l.trim()))) {
                           return (
-                            <ol key={idx} className="list-decimal pl-4 space-y-1 text-xs">
-                              {items.map((it, i) => (
-                                <li key={i}>{it.replace(/^\d+\.\s*/, '')}</li>
+                            <ol key={idx} className="list-decimal pl-4 space-y-1 text-xs my-1">
+                              {lines.map((it, i) => (
+                                <li key={i}>{renderFormattedText(it.replace(/^\d+\.\s*/, ''))}</li>
                               ))}
                             </ol>
                           )
                         }
-                        if (block.startsWith('- ')) {
-                          const items = block.split('\n')
+
+                        if (lines.some((l) => l.trim().startsWith('- '))) {
                           return (
-                            <ul key={idx} className="list-disc pl-4 space-y-1 text-xs">
-                              {items.map((it, i) => (
-                                <li key={i}>{it.replace(/^-\s*/, '')}</li>
+                            <ul key={idx} className="list-disc pl-4 space-y-1 text-xs my-1">
+                              {lines.map((it, i) => (
+                                <li key={i}>{renderFormattedText(it.replace(/^-\s*/, ''))}</li>
                               ))}
                             </ul>
                           )
                         }
+
                         return (
-                          <p key={idx} className="text-xs leading-5">
-                            {block}
+                          <p key={idx} className="text-xs leading-5 my-1 text-foreground/90">
+                            {renderFormattedText(block)}
                           </p>
                         )
                       })}

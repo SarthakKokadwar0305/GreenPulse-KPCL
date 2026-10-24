@@ -165,17 +165,18 @@ class CopilotService:
         # ---------------------------------------------------------
         # Branch 2: Vector RAG Retrieval from Qdrant
         # ---------------------------------------------------------
-        if intent in [QueryIntent.RAG_DOCS, QueryIntent.HYBRID] or (intent == QueryIntent.LIVE_DATA and detected_machine):
+        if intent != QueryIntent.GREETING:
             q_emb = self.embedding_service.embed_text(query_clean)
             hits = self.vector_store.search(
                 query_vector=q_emb,
                 collection_name=target_collection,
                 top_k=4,
-                min_score=0.30
+                min_score=0.32
             )
 
             if hits:
                 rag_blocks = []
+                seen_cits = set()
                 for hit in hits:
                     doc_title = hit["document"]
                     page = hit["page"]
@@ -183,15 +184,18 @@ class CopilotService:
                     sec = hit["section"]
                     score = round(hit["score"], 3)
                     rag_blocks.append(
-                        f"[Document: {doc_title} | Collection: {col} | Page: {page} | Section: {sec} | Score: {score}]\n{hit['text']}"
+                        f"[Document: {doc_title} | Collection: {col} | Page: {page} | Section: {sec}]\n{hit['text'][:450].strip()}"
                     )
-                    citations.append({
-                        "document": doc_title,
-                        "page": page,
-                        "section": sec,
-                        "collection": col,
-                        "relevance_score": score
-                    })
+                    cit_key = (doc_title, page)
+                    if cit_key not in seen_cits:
+                        seen_cits.add(cit_key)
+                        citations.append({
+                            "document": doc_title,
+                            "page": page,
+                            "section": sec,
+                            "collection": col,
+                            "relevance_score": score
+                        })
 
                 rag_context = (
                     "--- RETRIEVED COMPANY KNOWLEDGE DOCUMENTS (RAG) ---\n"
@@ -470,20 +474,29 @@ class CopilotService:
                 m_status = v.get("status", "ACTIVE")
                 m_temp = v.get("temperature_c", 0.0)
                 m_vib = v.get("vibration_mms", 0.0)
+
+                doc_excerpts = ""
+                if hits:
+                    doc_excerpts = "\n\n### OEM Manual & Operational Protocols\n" + "\n\n".join([
+                        f"- **{h['document']} (Page {h['page']}, Section: {h['section']})**:\n  > {h['text'].strip()[:280]}..."
+                        for h in hits[:2]
+                    ])
+
                 return (
                     f"### Summary\n"
-                    f"Telemetry diagnostics for **{m_name} ({m_code})**: Operating in state **{m_status}** "
-                    f"with a Health Index of **{m_health}%** and current load of **{m_pwr:.1f} kW**.\n\n"
+                    f"Operational diagnostics for **{m_name} ({m_code})**: Operating in state **{m_status}** "
+                    f"with a Machine Health Index of **{m_health}%** and current active load of **{m_pwr:.1f} kW**.\n\n"
                     f"### Detailed Explanation\n"
-                    f"- **Active Power**: **{m_pwr:.1f} kW**\n"
+                    f"- **Active Power Demand**: **{m_pwr:.1f} kW**\n"
                     f"- **Bearing Temperature**: **{m_temp:.1f} °C**\n"
-                    f"- **Vibration Velocity**: **{m_vib:.2f} mm/s RMS** (Nominal per ISO 10816)\n"
-                    f"- **Operating Status**: **{m_status}**\n\n"
-                    f"All operational parameters for {m_code} remain within acceptable limits.\n\n"
+                    f"- **Vibration Velocity RMS**: **{m_vib:.2f} mm/s** (Evaluated per ISO 10816)\n"
+                    f"- **Operational Status**: **{m_status}**\n\n"
+                    f"{'Machine telemetry indicates nominal operation within configured baselines.' if m_health >= 80 else 'Machine telemetry indicates advisory alerts or load stress requiring operational review.'}"
+                    f"{doc_excerpts}\n\n"
                     f"### Recommended Actions\n"
-                    f"1. Keep lubricant schedule updated according to OEM specifications.\n"
-                    f"2. Inspect drive couplings during the next scheduled shift changeover.\n"
-                    f"3. Continue real-time telemetry streaming in the Digital Twin view."
+                    f"1. Cross-reference operational registers with OEM operational manual limits.\n"
+                    f"2. Inspect lubrication level, belt tension, and motor drive couplings.\n"
+                    f"3. Continuously track live telemetry trends in the Digital Twin view."
                 )
 
         # 7. Industrial concept data
@@ -569,11 +582,19 @@ class CopilotService:
         if "### Sources" in text or "### Sources & Data Provenance" in text:
             return text
 
-        provenance_lines = ["\n\n### Sources & Data Provenance"]
+        seen = set()
+        unique_citations = []
+        for cit in citations:
+            key = (cit.get("document"), cit.get("page"))
+            if key not in seen:
+                seen.add(key)
+                unique_citations.append(cit)
+
+        provenance_lines = ["### Sources & Data Provenance\n"]
         if is_live_data:
             provenance_lines.append("- **Current Operational Data**: Real-time SCADA Modbus & Backend Machine Telemetry Engine.")
-        if citations:
-            for cit in citations:
+        if unique_citations:
+            for cit in unique_citations:
                 provenance_lines.append(f"- **Document**: *{cit['document']}* (Page {cit['page']}, Section: {cit['section']}, Collection: `{cit['collection']}`)")
         if concept_context:
             provenance_lines.append("- **Industrial Knowledge Base**: GreenPulse Manufacturing & Power Quality Engineering Corpus.")
@@ -581,4 +602,4 @@ class CopilotService:
         if len(provenance_lines) == 1:
             provenance_lines.append("- General Industrial Engineering Knowledge.")
 
-        return text + "\n".join(provenance_lines)
+        return text.rstrip() + "\n\n" + "\n".join(provenance_lines)
