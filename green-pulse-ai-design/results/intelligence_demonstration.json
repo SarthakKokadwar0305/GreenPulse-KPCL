@@ -1,0 +1,463 @@
+{
+  "title": "GreenPulse AI - Industrial Intelligence Layer Verification Suite",
+  "threshold_engine_examples": [
+    {
+      "machine_id": "COMP-01",
+      "machine_name": "Rotary Screw Industrial Air Compressor #1 (Lead)",
+      "department": "Utilities & Pneumatics",
+      "metric": "active_power_kw",
+      "unit": "kW",
+      "current_value": 410.0,
+      "expected_value": 350.0,
+      "lower_threshold": 330.0,
+      "upper_threshold": 370.0,
+      "critical_upper_threshold": 380.0,
+      "deviation": 60.0,
+      "deviation_pct": 17.14,
+      "severity": "Critical",
+      "confidence": 0.9847,
+      "reason": "Active Power excursion: Current 410.0 kW exceeds dynamic upper threshold of 370.0 kW (+17.1% deviation) against Historical operating mean adjusted for Shift 1.0x throughput.",
+      "context": {
+        "shift": "A",
+        "hour": 10,
+        "is_peak_tariff": true,
+        "is_weekend": false,
+        "machine_state": "running",
+        "production_level_pct": 100.0
+      }
+    },
+    {
+      "machine_id": "FURN-01",
+      "machine_name": "Continuous Atmospheric Heat Treatment Annealing Furnace",
+      "department": "Thermal Processing & Metallurgy",
+      "metric": "temperature_c",
+      "unit": "\u00b0C",
+      "current_value": 845.0,
+      "expected_value": 820.0,
+      "lower_threshold": 780.0,
+      "upper_threshold": 860.0,
+      "critical_upper_threshold": 880.0,
+      "deviation": 25.0,
+      "deviation_pct": 3.05,
+      "severity": "Normal",
+      "confidence": 0.9855,
+      "reason": "Temperature operating comfortably within dynamic industrial tolerance (820.0 \u00b1 40.0 \u00b0C) for Shift B.",
+      "context": {
+        "shift": "B",
+        "hour": 14,
+        "is_peak_tariff": false,
+        "is_weekend": false,
+        "machine_state": "running",
+        "production_level_pct": 100.0
+      }
+    },
+    {
+      "machine_id": "PAINT-01",
+      "machine_name": "Downdraft Automated Paint Spray Booth & Drying Plenum",
+      "department": "Surface Finishing & Coating",
+      "metric": "runtime_hours",
+      "unit": "hours",
+      "current_value": 13.0,
+      "expected_value": 6.8,
+      "lower_threshold": 3.8,
+      "upper_threshold": 9.8,
+      "critical_upper_threshold": 11.3,
+      "deviation": 6.2,
+      "deviation_pct": 91.18,
+      "severity": "Critical",
+      "confidence": 0.9557,
+      "reason": "Runtime Duration excursion: Current 13.0 hours exceeds dynamic upper threshold of 9.8 hours (+91.2% deviation) against Standard 8-hour shift schedule for Shift B.",
+      "context": {
+        "shift": "B",
+        "hour": 20,
+        "is_peak_tariff": true,
+        "is_weekend": false,
+        "machine_state": "running",
+        "production_level_pct": 100.0
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_name": "Compressor Unloader Valve Diaphragm Leakage",
+      "machine_id": "COMP-01",
+      "alerts_count": 4,
+      "fired_rules_count": 5,
+      "recommendations_count": 2,
+      "sample_alert": {
+        "alert_id": "ALT-20261024-5FE97B",
+        "alert_type": "ML_TELEMETRY_ANOMALY_DETECTED",
+        "timestamp": "2026-10-24T13:44:51.516119+00:00",
+        "machine_id": "COMP-01",
+        "machine_name": "Rotary Screw Industrial Air Compressor #1 (Lead)",
+        "department": "Utilities & Pneumatics",
+        "severity": "Critical",
+        "priority": "High",
+        "category": "Equipment Telemetry Anomaly",
+        "reason": "Isolation Forest identified abnormal multivariable operational excursion (score: 0.88, decision: -0.065).",
+        "evidence": [
+          {
+            "metric": "Anomaly Model Score",
+            "value": "0.880",
+            "threshold": "> 0.70",
+            "status": "Abnormal Excursion"
+          },
+          {
+            "metric": "Decision Function Margin",
+            "value": "-0.0650",
+            "normal_range": "> 0.00"
+          },
+          {
+            "metric": "Power Lag-1 Divergence",
+            "value": "8.3 kW delta"
+          },
+          {
+            "metric": "Current Power vs Rated",
+            "measured": "14.5 kW",
+            "rated": "58.0 kW"
+          }
+        ],
+        "confidence": 0.9436,
+        "suggested_action": "Dispatch maintenance technician to inspect machine mechanical loading, bearing temperature, and fluid pressures.",
+        "estimated_business_impact": "Detects impending component degradation prior to unexpected catastrophic breakdown.",
+        "estimated_financial_impact_inr": 12400.0
+      },
+      "sample_recommendation": {
+        "recommendation_id": "REC-COMP-01-PNEU-01",
+        "title": "Rebuild Compressor Stage-2 Unloader Valve Diaphragm Assembly",
+        "priority": "Critical",
+        "confidence": 0.96,
+        "affected_machine": {
+          "machine_id": "COMP-01",
+          "machine_name": "Rotary Screw Industrial Air Compressor #1 (Lead)",
+          "zone": "Utilities Block A",
+          "criticality": 5
+        },
+        "affected_department": {
+          "department_id": "DEPT-UTILITIES-PNEU",
+          "department_name": "Utilities & Pneumatics",
+          "cost_center": "CC-201"
+        },
+        "reason": "Unloaded idle power draw is 2.8x higher than nominal baseline due to internal unloader valve blowby.",
+        "business_explanation": "Compressor COMP-01 is consuming 14.5 kW during unloaded idle periods instead of the normal 5.8 kW baseline. Overhauling the valve diaphragm kit GA-355 will save \u20b9147,914 per month and avoid oil carryover.",
+        "technical_explanation": "Ultrasonic acoustic inspection and telemetry indicate stage-2 unloader valve seating failure. The suction throttle valve fails to close completely during unload cycle, causing continuous parasitic air re-compression against closed discharge check valves.",
+        "suggested_action": "Isolate pneumatic line #2 and install spare overhaul diaphragm kit GA-355 during scheduled 16:30 shift pause.",
+        "estimated_energy_savings_kwh": 7696.0,
+        "estimated_cost_savings_inr": 147913.6,
+        "estimated_carbon_reduction_kg": 6310.72,
+        "estimated_downtime_avoided_hrs": 2.5,
+        "roi": "11799.8%",
+        "implementation_difficulty": "Medium (Mechanical Overhaul)",
+        "implementation_time": "2 - 3 Hours",
+        "expected_payback": "0.1 months",
+        "supporting_rule_ids": [
+          "RULE-EE-002"
+        ],
+        "machine_criticality": 5,
+        "explainability": {
+          "triggered_by_observations": [
+            "Unloaded power measured at 14.5 kW vs 5.8 kW expected.",
+            "Isolation Forest anomaly score: 0.88"
+          ],
+          "contributing_ml_models": [
+            "anomaly_detector.joblib (Isolation Forest)",
+            "cost_forecast.joblib"
+          ],
+          "exceeded_thresholds": [
+            "active_power_kw"
+          ]
+        },
+        "business_impact": {
+          "energy_savings": {
+            "hourly_kwh": 18.5,
+            "daily_kwh": 296.0,
+            "monthly_kwh": 7696.0,
+            "annual_kwh": 92352.0
+          },
+          "financial_savings": {
+            "monthly_direct_opex_inr": 60413.6,
+            "annual_direct_opex_inr": 724963.2,
+            "monthly_avoided_downtime_inr": 87500.0,
+            "annual_avoided_downtime_inr": 1050000.0,
+            "monthly_total_savings_inr": 147913.6,
+            "annual_total_savings_inr": 1774963.2
+          },
+          "carbon_reduction": {
+            "monthly_carbon_kg_co2e": 6310.72,
+            "annual_carbon_kg_co2e": 75728.64,
+            "annual_carbon_tonnes_co2e": 75.729
+          },
+          "operational_reliability": {
+            "avoided_downtime_hours_per_month": 2.5,
+            "annual_avoided_downtime_hours": 30.0,
+            "productivity_improvement_pct": 0.0,
+            "risk_reduction": "High Risk Reduction"
+          },
+          "investment_economics": {
+            "capex_required_inr": 15000.0,
+            "payback_period": "0.1 months",
+            "payback_months": 0.1,
+            "roi_percent": 11799.8,
+            "esg_score_improvement_pts": 15.0
+          }
+        },
+        "priority_score": 96.1,
+        "priority_rank": "CRITICAL_IMMEDIATE",
+        "sequence_rank": 1
+      }
+    },
+    {
+      "scenario_name": "Heat Treatment Furnace Peak Tariff Delay & Contract Demand Exceedance",
+      "machine_id": "FURN-01",
+      "alerts_count": 2,
+      "fired_rules_count": 7,
+      "recommendations_count": 1,
+      "sample_alert": {
+        "alert_id": "ALT-20261024-E010ED",
+        "alert_type": "CONTRACT_DEMAND_CRITICAL",
+        "timestamp": "2026-10-24T13:44:51.518401+00:00",
+        "machine_id": "FURN-01",
+        "machine_name": "Continuous Atmospheric Heat Treatment Annealing Furnace",
+        "department": "Thermal Processing & Metallurgy",
+        "severity": "Emergency",
+        "priority": "Critical",
+        "category": "Contractual Demand Protection",
+        "reason": "Total plant active demand (238.5 kW) has breached 95% of contract limit (250.0 kW).",
+        "evidence": [
+          {
+            "metric": "Plant Active Demand",
+            "measured": "238.5 kW",
+            "threshold": "237.5 kW",
+            "deviation": "+1.0 kW"
+          },
+          {
+            "metric": "Contract Maximum Demand",
+            "value": "250.0 kW",
+            "status": "Penalized @ \u20b9450/kVA surge"
+          },
+          {
+            "metric": "Machine Active Power",
+            "measured": "92.0 kW",
+            "rated": "95.0 kW"
+          }
+        ],
+        "confidence": 0.98,
+        "suggested_action": "Execute Level-1 automated load shed: temporarily unload Heat Furnace 01 or defer secondary heater bank.",
+        "estimated_business_impact": "Avoids permanent 15-minute MDI penalty reset on monthly utility bill.",
+        "estimated_financial_impact_inr": 18500.0
+      },
+      "sample_recommendation": {
+        "recommendation_id": "REC-FURN-01-TOD-02",
+        "title": "Reschedule High-Power Heat Furnace 01 Batches to Off-Peak Shift C",
+        "priority": "High",
+        "confidence": 0.94,
+        "affected_machine": {
+          "machine_id": "FURN-01",
+          "machine_name": "Continuous Atmospheric Heat Treatment Annealing Furnace",
+          "zone": "Thermal Processing Hall",
+          "criticality": 5
+        },
+        "affected_department": {
+          "department_id": "DEPT-THERMAL",
+          "department_name": "Thermal Processing & Metallurgy",
+          "cost_center": "CC-301"
+        },
+        "reason": "Operating heavy thermal loads during morning/evening peak tariff windows incurs a 44% financial surcharge.",
+        "business_explanation": "Rescheduling non-urgent heat treatment batch annealing cycles from peak hours ([10, 11, 18, 19, 20, 21]) to night shift C (22:00\u201306:00) takes full advantage of the \u20b95.20/kWh off-peak rate, generating \u20b918,812 monthly savings with zero capital expenditure.",
+        "technical_explanation": "Heat treatment furnace requires 95 kW peak electrical draw during ramp-up. Shifting the 4-hour ramp cycle avoids triggering Maximum Demand Indicator (MDI) peaks and sidesteps \u20b910.368/kWh peak surcharges.",
+        "suggested_action": "Adjust ERP production dispatch schedule: lock furnace batch start to 22:30 on Shift C.",
+        "estimated_energy_savings_kwh": 3640.0,
+        "estimated_cost_savings_inr": 18811.52,
+        "estimated_carbon_reduction_kg": 2984.8,
+        "estimated_downtime_avoided_hrs": 0.0,
+        "roi": "999.0%",
+        "implementation_difficulty": "Low (Procedural / ERP Schedule Update)",
+        "implementation_time": "Immediate",
+        "expected_payback": "Immediate (Zero CAPEX)",
+        "supporting_rule_ids": [
+          "RULE-TO-011",
+          "RULE-TO-013"
+        ],
+        "machine_criticality": 5,
+        "explainability": {
+          "triggered_by_observations": [
+            "Current time window is within or approaching Peak Tariff band ([10, 11, 18, 19, 20, 21]).",
+            "ML Cost Forecast indicates \u20b979.5 cost projection."
+          ],
+          "contributing_ml_models": [
+            "cost_forecast.joblib (XGBoost)",
+            "peak_forecast.joblib (XGBoost)"
+          ],
+          "exceeded_thresholds": [
+            "active_power_kw during peak tariff"
+          ]
+        },
+        "business_impact": {
+          "energy_savings": {
+            "hourly_kwh": 35.0,
+            "daily_kwh": 140.0,
+            "monthly_kwh": 3640.0,
+            "annual_kwh": 43680.0
+          },
+          "financial_savings": {
+            "monthly_direct_opex_inr": 18811.52,
+            "annual_direct_opex_inr": 225738.24,
+            "monthly_avoided_downtime_inr": 0.0,
+            "annual_avoided_downtime_inr": 0.0,
+            "monthly_total_savings_inr": 18811.52,
+            "annual_total_savings_inr": 225738.24
+          },
+          "carbon_reduction": {
+            "monthly_carbon_kg_co2e": 2984.8,
+            "annual_carbon_kg_co2e": 35817.6,
+            "annual_carbon_tonnes_co2e": 35.818
+          },
+          "operational_reliability": {
+            "avoided_downtime_hours_per_month": 0.0,
+            "annual_avoided_downtime_hours": 0.0,
+            "productivity_improvement_pct": 0.0,
+            "risk_reduction": "Low Operational Risk"
+          },
+          "investment_economics": {
+            "capex_required_inr": 0.0,
+            "payback_period": "Immediate (Zero CAPEX / Operational Adjustment)",
+            "payback_months": 0.0,
+            "roi_percent": 999.0,
+            "esg_score_improvement_pts": 15.0
+          }
+        },
+        "priority_score": 73.56,
+        "priority_rank": "HIGH_PRIORITY",
+        "sequence_rank": 1
+      }
+    },
+    {
+      "scenario_name": "Coolant Pump Cavitation & Suction Strainer Pressure Drop",
+      "machine_id": "PUMP-01",
+      "alerts_count": 2,
+      "fired_rules_count": 3,
+      "recommendations_count": 2,
+      "sample_alert": {
+        "alert_id": "ALT-20261024-D36B25",
+        "alert_type": "ML_TELEMETRY_ANOMALY_DETECTED",
+        "timestamp": "2026-10-24T13:44:51.518891+00:00",
+        "machine_id": "PUMP-01",
+        "machine_name": "High-Pressure Cutting Fluid & Coolant Recirculation Pump",
+        "department": "Utilities & Hydronics",
+        "severity": "Critical",
+        "priority": "High",
+        "category": "Equipment Telemetry Anomaly",
+        "reason": "Isolation Forest identified abnormal multivariable operational excursion (score: 0.92, decision: -0.078).",
+        "evidence": [
+          {
+            "metric": "Anomaly Model Score",
+            "value": "0.920",
+            "threshold": "> 0.70",
+            "status": "Abnormal Excursion"
+          },
+          {
+            "metric": "Decision Function Margin",
+            "value": "-0.0780",
+            "normal_range": "> 0.00"
+          },
+          {
+            "metric": "Power Lag-1 Divergence",
+            "value": "0.0 kW delta"
+          },
+          {
+            "metric": "Current Power vs Rated",
+            "measured": "4.8 kW",
+            "rated": "12.0 kW"
+          }
+        ],
+        "confidence": 0.9524,
+        "suggested_action": "Dispatch maintenance technician to inspect machine mechanical loading, bearing temperature, and fluid pressures.",
+        "estimated_business_impact": "Detects impending component degradation prior to unexpected catastrophic breakdown.",
+        "estimated_financial_impact_inr": 12400.0
+      },
+      "sample_recommendation": {
+        "recommendation_id": "REC-PUMP-01-HYDRO-03",
+        "title": "Switch to Standby Pump & Flush Suction Basket Strainer",
+        "priority": "Critical",
+        "confidence": 0.95,
+        "affected_machine": {
+          "machine_id": "PUMP-01",
+          "machine_name": "High-Pressure Cutting Fluid & Coolant Recirculation Pump",
+          "zone": "Utilities Block B",
+          "criticality": 4
+        },
+        "affected_department": {
+          "department_id": "DEPT-UTILITIES-HYDRO",
+          "department_name": "Utilities & Hydronics",
+          "cost_center": "CC-202"
+        },
+        "reason": "Severe suction pressure drop (< 1.0 bar) and 3.5+ mm/s vibration indicate active cavitation inception.",
+        "business_explanation": "A clogged suction basket strainer is starving coolant pump PUMP-01, causing impeller cavitation. Flushing the strainer immediately prevents impeller destruction and saves \u20b9232,043 in avoided downtime.",
+        "technical_explanation": "Net Positive Suction Head Available (NPSHa) has fallen below NPSHr due to particulate debris on the 60-mesh suction screen. Vapor bubbles collapse on the bronze impeller vane edges, generating high-frequency shockwaves.",
+        "suggested_action": "Transfer hydronic load to standby pump P-102 via control panel; backflush strainer basket.",
+        "estimated_energy_savings_kwh": 2808.0,
+        "estimated_cost_savings_inr": 232042.8,
+        "estimated_carbon_reduction_kg": 2302.56,
+        "estimated_downtime_avoided_hrs": 6.0,
+        "roi": "61844.7%",
+        "implementation_difficulty": "Low (Quick Maintenance Routine)",
+        "implementation_time": "45 Minutes",
+        "expected_payback": "0.0 months",
+        "supporting_rule_ids": [
+          "RULE-EH-021"
+        ],
+        "machine_criticality": 4,
+        "explainability": {
+          "triggered_by_observations": [
+            "Suction pressure drop to 0.85 bar (normal > 1.4 bar).",
+            "Vibration RMS spike to 4.20 mm/s."
+          ],
+          "contributing_ml_models": [
+            "anomaly_detector.joblib (Isolation Forest)"
+          ],
+          "exceeded_thresholds": [
+            "vibration_rms",
+            "suction_pressure_bar"
+          ]
+        },
+        "business_impact": {
+          "energy_savings": {
+            "hourly_kwh": 4.5,
+            "daily_kwh": 108.0,
+            "monthly_kwh": 2808.0,
+            "annual_kwh": 33696.0
+          },
+          "financial_savings": {
+            "monthly_direct_opex_inr": 22042.8,
+            "annual_direct_opex_inr": 264513.6,
+            "monthly_avoided_downtime_inr": 210000.0,
+            "annual_avoided_downtime_inr": 2520000.0,
+            "monthly_total_savings_inr": 232042.8,
+            "annual_total_savings_inr": 2784513.6
+          },
+          "carbon_reduction": {
+            "monthly_carbon_kg_co2e": 2302.56,
+            "annual_carbon_kg_co2e": 27630.72,
+            "annual_carbon_tonnes_co2e": 27.631
+          },
+          "operational_reliability": {
+            "avoided_downtime_hours_per_month": 6.0,
+            "annual_avoided_downtime_hours": 72.0,
+            "productivity_improvement_pct": 0.0,
+            "risk_reduction": "Critical Equipment Protection"
+          },
+          "investment_economics": {
+            "capex_required_inr": 4500.0,
+            "payback_period": "0.0 months",
+            "payback_months": 0.0,
+            "roi_percent": 61844.7,
+            "esg_score_improvement_pts": 12.43
+          }
+        },
+        "priority_score": 86.18,
+        "priority_rank": "CRITICAL_IMMEDIATE",
+        "sequence_rank": 1
+      }
+    }
+  ]
+}

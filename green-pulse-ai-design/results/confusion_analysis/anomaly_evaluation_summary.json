@@ -1,0 +1,50 @@
+{
+  "model_type": "IsolationForest",
+  "contamination_parameter": 0.035,
+  "n_estimators": 150,
+  "features_used": [
+    "power_kw",
+    "rated_power_kw",
+    "ambient_temp_c",
+    "rolling_mean_1h",
+    "rolling_std_1h",
+    "power_lag_1",
+    "power_lag_2",
+    "power_lag_3",
+    "load_ratio"
+  ],
+  "training_time_seconds": 2.54,
+  "dataset_anomaly_rates": {
+    "train_anomaly_rate_pct": 3.5,
+    "validation_anomaly_rate_pct": 4.15,
+    "test_anomaly_rate_pct": 3.74
+  },
+  "score_distribution": {
+    "mean_decision_function_inliers": 0.1196,
+    "mean_decision_function_outliers": -0.0276,
+    "inlier_outlier_separation_margin": 0.1471,
+    "min_decision_function": -0.1244,
+    "max_decision_function": 0.1842
+  },
+  "state_wise_anomaly_analysis": {
+    "running": {
+      "total_samples": 14257,
+      "anomalies_detected": 665,
+      "anomaly_rate_pct": 4.66,
+      "mean_decision_score": 0.1051
+    },
+    "idle": {
+      "total_samples": 4695,
+      "anomalies_detected": 320,
+      "anomaly_rate_pct": 6.82,
+      "mean_decision_score": 0.0829
+    },
+    "off": {
+      "total_samples": 9712,
+      "anomalies_detected": 88,
+      "anomaly_rate_pct": 0.91,
+      "mean_decision_score": 0.1424
+    }
+  },
+  "evaluation_notes": "Model successfully learned normal multivariable operating baseline without supervision. Exhibits distinct negative decision margin for off-nominal power spikes and rapid thermal shifts."
+}

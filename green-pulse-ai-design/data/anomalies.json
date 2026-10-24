@@ -1,0 +1,109 @@
+[
+  {
+    "id": "anom-01",
+    "machineId": "air-compressor",
+    "machineName": "Air Compressor",
+    "zone": "Utilities Block A",
+    "severity": "critical",
+    "status": "open",
+    "detectedAt": "2026-10-24T13:42:00Z",
+    "durationMinutes": 88,
+    "rootCause": "Stage-2 Unloader Valve Diaphragm Internal Leakage",
+    "evidence": [
+      { "metric": "Idle Unload Power Draw", "measured": "84 kW", "expected": "58 kW", "zScore": 3.8 },
+      { "metric": "Discharge Port Temperature", "measured": "86°C", "expected": "74°C", "zScore": 2.9 },
+      { "metric": "Acoustic Ultrasound Band", "measured": "42 kHz @ 78 dB", "expected": "< 50 dB", "zScore": 4.1 }
+    ],
+    "confidencePercent": 96.4,
+    "suggestedAction": "Isolate pneumatic control line #2 and inspect unloader valve seat gasket. Install spare overhaul diaphragm kit GA-355 during scheduled 16:30 shift pause.",
+    "estimatedCostImpactPerHour": 140,
+    "currency": "₹/hr ~ ₹11,480",
+    "assignedEngineer": "R. Kulkarni",
+    "workOrderId": "WO-2026-904"
+  },
+  {
+    "id": "anom-02",
+    "machineId": "cooling-pump",
+    "machineName": "Cooling Pump",
+    "zone": "Utilities Block B",
+    "severity": "warning",
+    "status": "investigating",
+    "detectedAt": "2026-10-24T12:15:00Z",
+    "durationMinutes": 175,
+    "rootCause": "Suction Strainer Differential Pressure Drop & Cavitation Inception",
+    "evidence": [
+      { "metric": "Suction Manifold Pressure", "measured": "0.8 bar", "expected": "1.4 bar", "zScore": 2.7 },
+      { "metric": "Vibration Overall RMS", "measured": "4.2 mm/s", "expected": "2.2 mm/s", "zScore": 3.1 },
+      { "metric": "Motor Phase Current Imbalance", "measured": "2.4%", "expected": "< 1.0%", "zScore": 1.8 }
+    ],
+    "confidencePercent": 89.2,
+    "suggestedAction": "Switch hydronic load to standby pump P-103. Backflush suction basket strainer mesh and inspect mechanical seal chamber for trapped particulate.",
+    "estimatedCostImpactPerHour": 45,
+    "currency": "₹/hr ~ ₹3,690",
+    "assignedEngineer": "D. Joshi",
+    "workOrderId": "WO-2026-898"
+  },
+  {
+    "id": "anom-03",
+    "machineId": "heat-furnace",
+    "machineName": "Heat Furnace",
+    "zone": "Thermal Processing",
+    "severity": "warning",
+    "status": "acknowledged",
+    "detectedAt": "2026-10-24T10:30:00Z",
+    "durationMinutes": 280,
+    "rootCause": "Degraded Refractory Insulation at Upper Door Perimeter",
+    "evidence": [
+      { "metric": "External Shell Skin Temp", "measured": "54°C", "expected": "38°C", "zScore": 2.8 },
+      { "metric": "Specific Thermal Loss", "measured": "14.2 kW rad", "expected": "4.0 kW", "zScore": 3.4 },
+      { "metric": "Holding Cycle Energy", "measured": "310 kWh/batch", "expected": "285 kWh", "zScore": 2.1 }
+    ],
+    "confidencePercent": 92.1,
+    "suggestedAction": "Repack ceramic fiber blanket around door seal perimeter. Check pneumatic clamping cylinder torque.",
+    "estimatedCostImpactPerHour": 85,
+    "currency": "₹/hr ~ ₹6,970",
+    "assignedEngineer": "M. Deshmukh",
+    "workOrderId": "WO-2026-891"
+  },
+  {
+    "id": "anom-04",
+    "machineId": "paint-booth",
+    "machineName": "Paint Booth",
+    "zone": "Finishing Line",
+    "severity": "info",
+    "status": "open",
+    "detectedAt": "2026-10-24T14:10:00Z",
+    "durationMinutes": 60,
+    "rootCause": "Unoccupied Exhaust Airflow Power Dissipation",
+    "evidence": [
+      { "metric": "Conveyor Interlock State", "measured": "Conveyor Stopped", "expected": "Active Flow", "zScore": 0.0 },
+      { "metric": "Exhaust Motor Draw", "measured": "36 kW", "expected": "8 kW standby", "zScore": 3.6 },
+      { "metric": "Cumulative Idle Run", "measured": "142 minutes", "expected": "< 10 min", "zScore": 4.5 }
+    ],
+    "confidencePercent": 98.0,
+    "suggestedAction": "Enable automated PLC energy saving standby macro: throttle blower VFD to 18 Hz when conveyor photo-eye indicates no vehicle chassis for > 10 mins.",
+    "estimatedCostImpactPerHour": 28,
+    "currency": "₹/hr ~ ₹2,290"
+  },
+  {
+    "id": "anom-05",
+    "machineId": "cnc-machine",
+    "machineName": "CNC Machine",
+    "zone": "Machining Hall 2",
+    "severity": "info",
+    "status": "resolved",
+    "detectedAt": "2026-10-24T08:15:00Z",
+    "durationMinutes": 45,
+    "rootCause": "Spindle Toolholder Micro-Chatter Harmonic",
+    "evidence": [
+      { "metric": "High-Frequency Vibration", "measured": "180 Hz Peak", "expected": "Background", "zScore": 2.4 },
+      { "metric": "Spindle Motor Power Factor", "measured": "0.89", "expected": "0.94", "zScore": 1.9 }
+    ],
+    "confidencePercent": 94.5,
+    "suggestedAction": "Replaced worn collet sleeve; recalibrated tool clamping force to 18 kN. Harmonics returned to baseline.",
+    "estimatedCostImpactPerHour": 35,
+    "currency": "₹/hr ~ ₹2,870",
+    "assignedEngineer": "P. Nair",
+    "workOrderId": "WO-2026-880"
+  }
+]

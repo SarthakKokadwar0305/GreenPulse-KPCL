@@ -1,0 +1,5 @@
+algorithm,validation_r2,validation_mae,validation_rmse,validation_mape_pct,training_time_sec,latency_ms_per_sample,selected_for_production
+Extra Trees Regressor,0.6508,0.4797,0.8706,455.08,0.71,0.0047,False
+Random Forest Regressor,0.6433,0.4841,0.88,443.15,2.5,0.0061,False
+XGBoost Regressor (Primary),0.6297,0.4896,0.8965,482.94,0.4,0.0014,True
+Linear Regression (Ridge Baseline),0.6244,0.5377,0.9029,717.88,0.03,0.0007,False

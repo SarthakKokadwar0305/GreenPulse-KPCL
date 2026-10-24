@@ -1,0 +1,2150 @@
+{
+  "title": "GreenPulse AI - Industrial Dataset Understanding Summary",
+  "total_datasets_analyzed": 8,
+  "domain_variable_classification": {
+    "time_series_columns": [
+      "timestamp",
+      "hour",
+      "day_of_week",
+      "hour_sin",
+      "hour_cos",
+      "dow_sin",
+      "dow_cos"
+    ],
+    "machine_identifiers": [
+      "machine_id"
+    ],
+    "machine_operational_state": [
+      "rated_power_kw",
+      "machine_state",
+      "shift",
+      "ambient_temp_c"
+    ],
+    "energy_power_telemetry": [
+      "rated_power_kw",
+      "power_kw",
+      "energy_kwh",
+      "power_lag_1",
+      "power_lag_2",
+      "power_lag_3",
+      "power_lag_6",
+      "power_lag_12",
+      "power_lag_288",
+      "power_lag_2016",
+      "rolling_mean_1h",
+      "rolling_std_1h",
+      "target_power_next_interval_kw"
+    ],
+    "supported_forecasting_targets": [
+      "target_energy_kwh (Active electrical consumption per 5-min interval)",
+      "target_cost_inr (Operational expenditure under ToD peak/off-peak tariffs)",
+      "target_carbon_kg (Scope 2 GHG emissions at 0.82 kg/kWh)",
+      "target_peak_kw (Interval peak demand in kW for MDI tracking)"
+    ],
+    "supported_anomaly_tasks": [
+      "Unsupervised equipment state autoencoder/isolation forest based on power, lag dynamics, temperature, and load ratio."
+    ]
+  },
+  "dataset_profiles": {
+    "ml_train.csv": {
+      "filename": "ml_train.csv",
+      "rows": 133326,
+      "columns_count": 26,
+      "columns": [
+        "machine_id",
+        "timestamp",
+        "hour",
+        "day_of_week",
+        "is_weekend",
+        "rated_power_kw",
+        "machine_state",
+        "shift",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw",
+        "split"
+      ],
+      "numerical_columns": [
+        "hour",
+        "day_of_week",
+        "rated_power_kw",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw"
+      ],
+      "categorical_columns": [
+        "machine_id",
+        "timestamp",
+        "machine_state",
+        "shift",
+        "split"
+      ],
+      "boolean_columns": [
+        "is_weekend"
+      ],
+      "column_details": {
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-01",
+            "CNC-01"
+          ]
+        },
+        "timestamp": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 16732,
+          "sample_values": [
+            "2026-07-07 18:30:00+00:00",
+            "2026-07-07 18:35:00+00:00",
+            "2026-07-07 18:40:00+00:00"
+          ]
+        },
+        "hour": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 24,
+          "sample_values": [
+            0,
+            0,
+            0
+          ],
+          "min": 0.0,
+          "max": 23.0,
+          "mean": 11.5144,
+          "std": 6.9233
+        },
+        "day_of_week": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            2,
+            2,
+            2
+          ],
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 2.9814,
+          "std": 1.9669
+        },
+        "is_weekend": {
+          "dtype": "bool",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            false,
+            false,
+            false
+          ]
+        },
+        "rated_power_kw": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            22,
+            22,
+            22
+          ],
+          "min": 12.0,
+          "max": 95.0,
+          "mean": 38.1913,
+          "std": 25.273
+        },
+        "machine_state": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "off",
+            "off",
+            "off"
+          ]
+        },
+        "shift": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "C",
+            "C",
+            "C"
+          ]
+        },
+        "ambient_temp_c": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1449,
+          "sample_values": [
+            23.5,
+            23.55,
+            26.61
+          ],
+          "min": 19.9,
+          "max": 36.24,
+          "mean": 27.9942,
+          "std": 3.675
+        },
+        "power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.525,
+            0.088,
+            0.256
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.965,
+          "std": 17.4087
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 77799,
+          "sample_values": [
+            0.04372,
+            0.00732,
+            0.02134
+          ],
+          "min": 0.0,
+          "max": 7.4811,
+          "mean": 1.0804,
+          "std": 1.4507
+        },
+        "power_lag_1": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.097,
+            0.525,
+            0.088
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9643,
+          "std": 17.4075
+        },
+        "power_lag_2": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.173,
+            0.097,
+            0.525
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9638,
+          "std": 17.4063
+        },
+        "power_lag_3": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.136,
+            0.173,
+            0.097
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9631,
+          "std": 17.405
+        },
+        "power_lag_6": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.572,
+            0.0,
+            0.227
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9616,
+          "std": 17.4014
+        },
+        "power_lag_12": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.119,
+            0.487,
+            0.506
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9588,
+          "std": 17.3942
+        },
+        "power_lag_288": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34733,
+          "sample_values": [
+            0.0,
+            0.025,
+            0.096
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9323,
+          "std": 17.3605
+        },
+        "power_lag_2016": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34698,
+          "sample_values": [
+            0.596,
+            0.137,
+            0.312
+          ],
+          "min": 0.0,
+          "max": 89.943,
+          "mean": 12.9245,
+          "std": 17.3589
+        },
+        "rolling_mean_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 107228,
+          "sample_values": [
+            0.25466666666666665,
+            0.2885,
+            0.25525000000000003
+          ],
+          "min": 0.0272,
+          "max": 88.35,
+          "mean": 12.9614,
+          "std": 13.8925
+        },
+        "rolling_std_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 130471,
+          "sample_values": [
+            0.19970994117944307,
+            0.20881984405837561,
+            0.2060878563751163
+          ],
+          "min": 0.0,
+          "max": 46.0985,
+          "mean": 6.9474,
+          "std": 8.4558
+        },
+        "hour_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0022,
+          "std": 0.7066
+        },
+        "hour_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0006,
+          "std": 0.7077
+        },
+        "dow_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            0.9749279121818236,
+            0.9749279121818236,
+            0.9749279121818236
+          ],
+          "min": -0.9749,
+          "max": 0.9749,
+          "mean": 0.0245,
+          "std": 0.7085
+        },
+        "dow_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            -0.22252093395631434,
+            -0.22252093395631434,
+            -0.22252093395631434
+          ],
+          "min": -0.901,
+          "max": 1.0,
+          "mean": -0.0211,
+          "std": 0.705
+        },
+        "target_power_next_interval_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 34764,
+          "sample_values": [
+            0.088,
+            0.256,
+            0.248
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9654,
+          "std": 17.4099
+        },
+        "split": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "train",
+            "train",
+            "train"
+          ]
+        }
+      }
+    },
+    "ml_validation.csv": {
+      "filename": "ml_validation.csv",
+      "rows": 28619,
+      "columns_count": 26,
+      "columns": [
+        "machine_id",
+        "timestamp",
+        "hour",
+        "day_of_week",
+        "is_weekend",
+        "rated_power_kw",
+        "machine_state",
+        "shift",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw",
+        "split"
+      ],
+      "numerical_columns": [
+        "hour",
+        "day_of_week",
+        "rated_power_kw",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw"
+      ],
+      "categorical_columns": [
+        "machine_id",
+        "timestamp",
+        "machine_state",
+        "shift",
+        "split"
+      ],
+      "boolean_columns": [
+        "is_weekend"
+      ],
+      "column_details": {
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-01",
+            "CNC-01"
+          ]
+        },
+        "timestamp": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3585,
+          "sample_values": [
+            "2026-09-03 20:50:00+00:00",
+            "2026-09-03 20:55:00+00:00",
+            "2026-09-03 21:00:00+00:00"
+          ]
+        },
+        "hour": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 24,
+          "sample_values": [
+            2,
+            2,
+            2
+          ],
+          "min": 0.0,
+          "max": 23.0,
+          "mean": 11.367,
+          "std": 6.8589
+        },
+        "day_of_week": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            4,
+            4,
+            4
+          ],
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 3.0259,
+          "std": 2.1116
+        },
+        "is_weekend": {
+          "dtype": "bool",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            false,
+            false,
+            false
+          ]
+        },
+        "rated_power_kw": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            22,
+            22,
+            22
+          ],
+          "min": 12.0,
+          "max": 95.0,
+          "mean": 38.1103,
+          "std": 25.2713
+        },
+        "machine_state": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "off",
+            "off",
+            "off"
+          ]
+        },
+        "shift": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "C",
+            "C",
+            "C"
+          ]
+        },
+        "ambient_temp_c": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1212,
+          "sample_values": [
+            24.73,
+            20.51,
+            23.1
+          ],
+          "min": 19.12,
+          "max": 35.64,
+          "mean": 27.9455,
+          "std": 3.6649
+        },
+        "power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13828,
+          "sample_values": [
+            0.0,
+            0.58,
+            0.388
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.96,
+          "std": 18.0347
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 21427,
+          "sample_values": [
+            0.0,
+            0.0483,
+            0.03236
+          ],
+          "min": 0.0,
+          "max": 7.425,
+          "mean": 1.08,
+          "std": 1.5029
+        },
+        "power_lag_1": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13825,
+          "sample_values": [
+            0.122,
+            0.0,
+            0.58
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9595,
+          "std": 18.0404
+        },
+        "power_lag_2": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13816,
+          "sample_values": [
+            0.121,
+            0.122,
+            0.0
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9542,
+          "std": 18.0404
+        },
+        "power_lag_3": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13815,
+          "sample_values": [
+            0.0,
+            0.121,
+            0.122
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9528,
+          "std": 18.0406
+        },
+        "power_lag_6": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13805,
+          "sample_values": [
+            0.344,
+            0.226,
+            0.586
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9457,
+          "std": 18.045
+        },
+        "power_lag_12": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13782,
+          "sample_values": [
+            0.588,
+            0.066,
+            0.277
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9393,
+          "std": 18.0726
+        },
+        "power_lag_288": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13816,
+          "sample_values": [
+            0.256,
+            0.159,
+            0.138
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 13.0653,
+          "std": 18.2006
+        },
+        "power_lag_2016": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13893,
+          "sample_values": [
+            0.468,
+            0.0,
+            0.273
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 13.2361,
+          "std": 18.3112
+        },
+        "rolling_mean_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 26204,
+          "sample_values": [
+            0.25325,
+            0.20424999999999996,
+            0.24708333333333332
+          ],
+          "min": 0.0154,
+          "max": 88.35,
+          "mean": 12.9463,
+          "std": 14.9591
+        },
+        "rolling_std_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 27801,
+          "sample_values": [
+            0.1858626692439443,
+            0.16603949420745262,
+            0.19148199931301166
+          ],
+          "min": 0.0,
+          "max": 40.4217,
+          "mean": 6.6377,
+          "std": 8.2023
+        },
+        "hour_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            0.49999999999999994,
+            0.49999999999999994,
+            0.49999999999999994
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": 0.0236,
+          "std": 0.7085
+        },
+        "hour_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            0.8660254037844387,
+            0.8660254037844387,
+            0.8660254037844387
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0099,
+          "std": 0.7053
+        },
+        "dow_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            -0.433883739117558,
+            -0.433883739117558,
+            -0.433883739117558
+          ],
+          "min": -0.9749,
+          "max": 0.9749,
+          "mean": -0.0659,
+          "std": 0.7119
+        },
+        "dow_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            -0.9009688679024191,
+            -0.9009688679024191,
+            -0.9009688679024191
+          ],
+          "min": -0.901,
+          "max": 1.0,
+          "mean": 0.0891,
+          "std": 0.6936
+        },
+        "target_power_next_interval_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13834,
+          "sample_values": [
+            0.58,
+            0.388,
+            0.476
+          ],
+          "min": 0.0,
+          "max": 89.1,
+          "mean": 12.9625,
+          "std": 18.0334
+        },
+        "split": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "validation",
+            "validation",
+            "validation"
+          ]
+        }
+      }
+    },
+    "ml_test.csv": {
+      "filename": "ml_test.csv",
+      "rows": 28664,
+      "columns_count": 26,
+      "columns": [
+        "machine_id",
+        "timestamp",
+        "hour",
+        "day_of_week",
+        "is_weekend",
+        "rated_power_kw",
+        "machine_state",
+        "shift",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw",
+        "split"
+      ],
+      "numerical_columns": [
+        "hour",
+        "day_of_week",
+        "rated_power_kw",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw"
+      ],
+      "categorical_columns": [
+        "machine_id",
+        "timestamp",
+        "machine_state",
+        "shift",
+        "split"
+      ],
+      "boolean_columns": [
+        "is_weekend"
+      ],
+      "column_details": {
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-01",
+            "CNC-01"
+          ]
+        },
+        "timestamp": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3586,
+          "sample_values": [
+            "2026-09-16 07:35:00+00:00",
+            "2026-09-16 07:40:00+00:00",
+            "2026-09-16 07:45:00+00:00"
+          ]
+        },
+        "hour": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 24,
+          "sample_values": [
+            13,
+            13,
+            13
+          ],
+          "min": 0.0,
+          "max": 23.0,
+          "mean": 11.745,
+          "std": 6.9243
+        },
+        "day_of_week": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            2,
+            2,
+            2
+          ],
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 3.2046,
+          "std": 2.0226
+        },
+        "is_weekend": {
+          "dtype": "bool",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            false,
+            false,
+            false
+          ]
+        },
+        "rated_power_kw": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            22,
+            22,
+            22
+          ],
+          "min": 12.0,
+          "max": 95.0,
+          "mean": 38.1192,
+          "std": 25.2562
+        },
+        "machine_state": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "running",
+            "running",
+            "running"
+          ]
+        },
+        "shift": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "A",
+            "A",
+            "A"
+          ]
+        },
+        "ambient_temp_c": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1228,
+          "sample_values": [
+            33.25,
+            32.46,
+            31.55
+          ],
+          "min": 20.01,
+          "max": 35.88,
+          "mean": 28.104,
+          "std": 3.6789
+        },
+        "power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14019,
+          "sample_values": [
+            13.547,
+            14.518,
+            12.937
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.7688,
+          "std": 17.3852
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 21760,
+          "sample_values": [
+            1.12891,
+            1.20986,
+            1.07806
+          ],
+          "min": 0.0,
+          "max": 7.6431,
+          "mean": 1.0641,
+          "std": 1.4488
+        },
+        "power_lag_1": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14026,
+          "sample_values": [
+            12.775,
+            13.547,
+            14.518
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.7722,
+          "std": 17.3849
+        },
+        "power_lag_2": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14031,
+          "sample_values": [
+            14.187,
+            12.775,
+            13.547
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.7794,
+          "std": 17.3907
+        },
+        "power_lag_3": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14034,
+          "sample_values": [
+            2.034,
+            14.187,
+            12.775
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.7853,
+          "std": 17.3968
+        },
+        "power_lag_6": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14046,
+          "sample_values": [
+            1.341,
+            1.773,
+            1.978
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.8026,
+          "std": 17.4089
+        },
+        "power_lag_12": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14065,
+          "sample_values": [
+            14.702,
+            12.004,
+            15.303
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.8255,
+          "std": 17.4143
+        },
+        "power_lag_288": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14037,
+          "sample_values": [
+            12.48,
+            11.046,
+            14.102
+          ],
+          "min": 0.0,
+          "max": 89.559,
+          "mean": 12.7451,
+          "std": 17.3403
+        },
+        "power_lag_2016": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 13924,
+          "sample_values": [
+            10.285,
+            12.033,
+            11.013
+          ],
+          "min": 0.0,
+          "max": 89.559,
+          "mean": 12.6476,
+          "std": 17.2889
+        },
+        "rolling_mean_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 26754,
+          "sample_values": [
+            7.892166666666667,
+            7.795916666666667,
+            8.005416666666667
+          ],
+          "min": 0.0407,
+          "max": 75.4786,
+          "mean": 12.8023,
+          "std": 13.9881
+        },
+        "rolling_std_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 28038,
+          "sample_values": [
+            6.365140444545423,
+            6.260680204960792,
+            6.453392616690197
+          ],
+          "min": 0.0658,
+          "max": 43.589,
+          "mean": 6.8587,
+          "std": 8.3664
+        },
+        "hour_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            -0.2588190451025208,
+            -0.2588190451025208,
+            -0.2588190451025208
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0254,
+          "std": 0.7083
+        },
+        "hour_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            -0.9659258262890683,
+            -0.9659258262890683,
+            -0.9659258262890683
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0008,
+          "std": 0.7055
+        },
+        "dow_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            0.9749279121818236,
+            0.9749279121818236,
+            0.9749279121818236
+          ],
+          "min": -0.9749,
+          "max": 0.9749,
+          "mean": -0.1052,
+          "std": 0.6787
+        },
+        "dow_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            -0.22252093395631434,
+            -0.22252093395631434,
+            -0.22252093395631434
+          ],
+          "min": -0.901,
+          "max": 1.0,
+          "mean": -0.0399,
+          "std": 0.7257
+        },
+        "target_power_next_interval_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 14013,
+          "sample_values": [
+            14.518,
+            12.937,
+            1.881
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.7622,
+          "std": 17.3804
+        },
+        "split": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "test",
+            "test",
+            "test"
+          ]
+        }
+      }
+    },
+    "ml_features_all.csv": {
+      "filename": "ml_features_all.csv",
+      "rows": 190609,
+      "columns_count": 26,
+      "columns": [
+        "machine_id",
+        "timestamp",
+        "hour",
+        "day_of_week",
+        "is_weekend",
+        "rated_power_kw",
+        "machine_state",
+        "shift",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw",
+        "split"
+      ],
+      "numerical_columns": [
+        "hour",
+        "day_of_week",
+        "rated_power_kw",
+        "ambient_temp_c",
+        "power_kw",
+        "energy_kwh",
+        "power_lag_1",
+        "power_lag_2",
+        "power_lag_3",
+        "power_lag_6",
+        "power_lag_12",
+        "power_lag_288",
+        "power_lag_2016",
+        "rolling_mean_1h",
+        "rolling_std_1h",
+        "hour_sin",
+        "hour_cos",
+        "dow_sin",
+        "dow_cos",
+        "target_power_next_interval_kw"
+      ],
+      "categorical_columns": [
+        "machine_id",
+        "timestamp",
+        "machine_state",
+        "shift",
+        "split"
+      ],
+      "boolean_columns": [
+        "is_weekend"
+      ],
+      "column_details": {
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-01",
+            "CNC-01"
+          ]
+        },
+        "timestamp": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 23903,
+          "sample_values": [
+            "2026-07-07 18:30:00+00:00",
+            "2026-07-07 18:35:00+00:00",
+            "2026-07-07 18:40:00+00:00"
+          ]
+        },
+        "hour": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 24,
+          "sample_values": [
+            0,
+            0,
+            0
+          ],
+          "min": 0.0,
+          "max": 23.0,
+          "mean": 11.5269,
+          "std": 6.9146
+        },
+        "day_of_week": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            2,
+            2,
+            2
+          ],
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 3.0217,
+          "std": 1.9992
+        },
+        "is_weekend": {
+          "dtype": "bool",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            false,
+            false,
+            false
+          ]
+        },
+        "rated_power_kw": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            22,
+            22,
+            22
+          ],
+          "min": 12.0,
+          "max": 95.0,
+          "mean": 38.1683,
+          "std": 25.2701
+        },
+        "machine_state": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "off",
+            "off",
+            "off"
+          ]
+        },
+        "shift": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "C",
+            "C",
+            "C"
+          ]
+        },
+        "ambient_temp_c": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 1482,
+          "sample_values": [
+            23.5,
+            23.55,
+            26.61
+          ],
+          "min": 19.12,
+          "max": 36.24,
+          "mean": 28.0034,
+          "std": 3.6743
+        },
+        "power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40582,
+          "sample_values": [
+            0.525,
+            0.088,
+            0.256
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9347,
+          "std": 17.5006
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 100562,
+          "sample_values": [
+            0.04372,
+            0.00732,
+            0.02134
+          ],
+          "min": 0.0,
+          "max": 7.6431,
+          "mean": 1.0779,
+          "std": 1.4584
+        },
+        "power_lag_1": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40582,
+          "sample_values": [
+            0.097,
+            0.525,
+            0.088
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9347,
+          "std": 17.5007
+        },
+        "power_lag_2": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40582,
+          "sample_values": [
+            0.173,
+            0.097,
+            0.525
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9346,
+          "std": 17.5007
+        },
+        "power_lag_3": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40581,
+          "sample_values": [
+            0.136,
+            0.173,
+            0.097
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9348,
+          "std": 17.5007
+        },
+        "power_lag_6": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40581,
+          "sample_values": [
+            0.572,
+            0.0,
+            0.227
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9353,
+          "std": 17.5007
+        },
+        "power_lag_12": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40581,
+          "sample_values": [
+            0.119,
+            0.487,
+            0.506
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9358,
+          "std": 17.5007
+        },
+        "power_lag_288": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40532,
+          "sample_values": [
+            0.0,
+            0.025,
+            0.096
+          ],
+          "min": 0.0,
+          "max": 89.773,
+          "mean": 12.9241,
+          "std": 17.4864
+        },
+        "power_lag_2016": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40528,
+          "sample_values": [
+            0.596,
+            0.137,
+            0.312
+          ],
+          "min": 0.0,
+          "max": 89.943,
+          "mean": 12.9297,
+          "std": 17.4954
+        },
+        "rolling_mean_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 146253,
+          "sample_values": [
+            0.25466666666666665,
+            0.2885,
+            0.25525000000000003
+          ],
+          "min": 0.0154,
+          "max": 88.35,
+          "mean": 12.9352,
+          "std": 14.0721
+        },
+        "rolling_std_1h": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 186309,
+          "sample_values": [
+            0.19970994117944307,
+            0.20881984405837561,
+            0.2060878563751163
+          ],
+          "min": 0.0,
+          "max": 46.0985,
+          "mean": 6.8876,
+          "std": 8.4055
+        },
+        "hour_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.0018,
+          "std": 0.7072
+        },
+        "hour_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 22,
+          "sample_values": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "min": -1.0,
+          "max": 1.0,
+          "mean": -0.002,
+          "std": 0.707
+        },
+        "dow_sin": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            0.9749279121818236,
+            0.9749279121818236,
+            0.9749279121818236
+          ],
+          "min": -0.9749,
+          "max": 0.9749,
+          "mean": -0.0085,
+          "std": 0.7065
+        },
+        "dow_cos": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 7,
+          "sample_values": [
+            -0.22252093395631434,
+            -0.22252093395631434,
+            -0.22252093395631434
+          ],
+          "min": -0.901,
+          "max": 1.0,
+          "mean": -0.0074,
+          "std": 0.7076
+        },
+        "target_power_next_interval_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 40583,
+          "sample_values": [
+            0.088,
+            0.256,
+            0.248
+          ],
+          "min": 0.0,
+          "max": 91.717,
+          "mean": 12.9344,
+          "std": 17.5006
+        },
+        "split": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "train",
+            "train",
+            "train"
+          ]
+        }
+      }
+    },
+    "machine_energy_summary.csv": {
+      "filename": "machine_energy_summary.csv",
+      "rows": 8,
+      "columns_count": 7,
+      "columns": [
+        "machine_id",
+        "process_type",
+        "valid_readings",
+        "total_energy_kwh",
+        "mean_power_kw",
+        "max_power_kw",
+        "mean_energy_kwh_per_interval"
+      ],
+      "numerical_columns": [
+        "valid_readings",
+        "total_energy_kwh",
+        "mean_power_kw",
+        "max_power_kw",
+        "mean_energy_kwh_per_interval"
+      ],
+      "categorical_columns": [
+        "machine_id",
+        "process_type"
+      ],
+      "boolean_columns": [],
+      "column_details": {
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-02",
+            "COMP-01"
+          ]
+        },
+        "process_type": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 6,
+          "sample_values": [
+            "CNC machining",
+            "CNC machining",
+            "Air compressor"
+          ]
+        },
+        "valid_readings": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            25920,
+            25824,
+            25920
+          ],
+          "min": 25824.0,
+          "max": 25920.0,
+          "mean": 25896.0,
+          "std": 38.4856
+        },
+        "total_energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            12877.78,
+            10300.59,
+            49764.8
+          ],
+          "min": 8081.03,
+          "max": 59046.74,
+          "mean": 27848.9488,
+          "std": 19187.0625
+        },
+        "mean_power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            5.962,
+            4.787,
+            23.039
+          ],
+          "min": 3.741,
+          "max": 27.336,
+          "mean": 12.9009,
+          "std": 8.8805
+        },
+        "max_power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            21.946,
+            17.236,
+            55.955
+          ],
+          "min": 11.82,
+          "max": 91.717,
+          "mean": 37.6214,
+          "std": 28.0564
+        },
+        "mean_energy_kwh_per_interval": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            0.49682811419753087,
+            0.3988766837050805,
+            1.9199382785493826
+          ],
+          "min": 0.3118,
+          "max": 2.278,
+          "mean": 1.0751,
+          "std": 0.7401
+        }
+      }
+    },
+    "daily_energy_by_machine.csv": {
+      "filename": "daily_energy_by_machine.csv",
+      "rows": 720,
+      "columns_count": 3,
+      "columns": [
+        "local_date",
+        "machine_id",
+        "energy_kwh"
+      ],
+      "numerical_columns": [
+        "energy_kwh"
+      ],
+      "categorical_columns": [
+        "local_date",
+        "machine_id"
+      ],
+      "boolean_columns": [],
+      "column_details": {
+        "local_date": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 90,
+          "sample_values": [
+            "2026-07-01",
+            "2026-07-01",
+            "2026-07-01"
+          ]
+        },
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-02",
+            "COMP-01"
+          ]
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 720,
+          "sample_values": [
+            175.57826,
+            132.06110999999999,
+            620.36074
+          ],
+          "min": 3.4276,
+          "max": 1799.6051,
+          "mean": 309.4328,
+          "std": 238.7106
+        }
+      }
+    },
+    "hourly_pattern_by_machine.csv": {
+      "filename": "hourly_pattern_by_machine.csv",
+      "rows": 192,
+      "columns_count": 4,
+      "columns": [
+        "hour",
+        "machine_id",
+        "mean_power_kw",
+        "energy_kwh"
+      ],
+      "numerical_columns": [
+        "hour",
+        "mean_power_kw",
+        "energy_kwh"
+      ],
+      "categorical_columns": [
+        "machine_id"
+      ],
+      "boolean_columns": [],
+      "column_details": {
+        "hour": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 24,
+          "sample_values": [
+            0,
+            0,
+            0
+          ],
+          "min": 0.0,
+          "max": 23.0,
+          "mean": 11.5,
+          "std": 6.9403
+        },
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-02",
+            "COMP-01"
+          ]
+        },
+        "mean_power_kw": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 192,
+          "sample_values": [
+            0.35919814814814816,
+            0.18717134831460674,
+            7.896446296296297
+          ],
+          "min": 0.1855,
+          "max": 48.5881,
+          "mean": 12.8976,
+          "std": 12.2478
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 192,
+          "sample_values": [
+            32.32787,
+            16.65921,
+            710.68053
+          ],
+          "min": 16.6592,
+          "max": 4372.9317,
+          "mean": 1160.3729,
+          "std": 1102.4775
+        }
+      }
+    },
+    "production_efficiency_by_day.csv": {
+      "filename": "production_efficiency_by_day.csv",
+      "rows": 720,
+      "columns_count": 6,
+      "columns": [
+        "local_date",
+        "machine_id",
+        "energy_kwh",
+        "units_produced",
+        "good_units",
+        "kwh_per_good_unit"
+      ],
+      "numerical_columns": [
+        "energy_kwh",
+        "units_produced",
+        "good_units",
+        "kwh_per_good_unit"
+      ],
+      "categorical_columns": [
+        "local_date",
+        "machine_id"
+      ],
+      "boolean_columns": [],
+      "column_details": {
+        "local_date": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 90,
+          "sample_values": [
+            "2026-07-01",
+            "2026-07-01",
+            "2026-07-01"
+          ]
+        },
+        "machine_id": {
+          "dtype": "str",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "CNC-01",
+            "CNC-02",
+            "COMP-01"
+          ]
+        },
+        "energy_kwh": {
+          "dtype": "float64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 720,
+          "sample_values": [
+            175.57826,
+            132.06110999999999,
+            620.36074
+          ],
+          "min": 3.4276,
+          "max": 1799.6051,
+          "mean": 309.4328,
+          "std": 238.7106
+        },
+        "units_produced": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 159,
+          "sample_values": [
+            277,
+            227,
+            0
+          ],
+          "min": 0.0,
+          "max": 674.0,
+          "mean": 112.5875,
+          "std": 182.3249
+        },
+        "good_units": {
+          "dtype": "int64",
+          "null_count": 0,
+          "null_percentage": 0.0,
+          "unique_count": 160,
+          "sample_values": [
+            265,
+            221,
+            0
+          ],
+          "min": 0.0,
+          "max": 651.0,
+          "mean": 109.8403,
+          "std": 177.8463
+        },
+        "kwh_per_good_unit": {
+          "dtype": "float64",
+          "null_count": 489,
+          "null_percentage": 67.92,
+          "unique_count": 215,
+          "sample_values": [
+            0.6626,
+            0.5976,
+            0.5179
+          ],
+          "min": 0.4447,
+          "max": 0.8028,
+          "mean": 0.577,
+          "std": 0.0695
+        }
+      }
+    }
+  }
+}

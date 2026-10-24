@@ -1,0 +1,103 @@
+[
+  {
+    "id": "rec-01",
+    "title": "Shift Vacuum Furnace Preheating to Night Off-Peak Tariff Window",
+    "machineName": "Heat Furnace",
+    "category": "Load Shifting",
+    "priority": "High",
+    "estimatedSavingsKwhPerMonth": 18400,
+    "estimatedSavingsCurrencyPerMonth": 147200,
+    "estimatedCarbonReductionTonsPerMonth": 15.1,
+    "paybackPeriodMonths": 0.0,
+    "roiPercent": 480,
+    "confidencePercent": 96.5,
+    "rationale": "Furnace batch preheat currently coincides with State grid peak tariff window (18:00 - 22:00 @ ₹10.40/kWh). Shifting the ramp to 22:30 (off-peak @ ₹5.20/kWh) cuts electricity unit cost by 50% without altering production output.",
+    "actionSteps": [
+      "Adjust MES scheduling recipe queue for Batch #401",
+      "Update SCADA automatic start timer to 22:30",
+      "Verify night shift operator pre-check checklist"
+    ],
+    "applied": false
+  },
+  {
+    "id": "rec-02",
+    "title": "Retrofit Air Compressor Air-End with Smart Modulation & VFD Tuning",
+    "machineName": "Air Compressor",
+    "category": "Asset Tuning",
+    "priority": "High",
+    "estimatedSavingsKwhPerMonth": 24800,
+    "estimatedSavingsCurrencyPerMonth": 178560,
+    "estimatedCarbonReductionTonsPerMonth": 20.3,
+    "paybackPeriodMonths": 3.8,
+    "roiPercent": 315,
+    "confidencePercent": 94.2,
+    "rationale": "Operating at fixed discharge pressure of 7.2 bar when plant tools require only 6.2 bar. Lowering system setpoint by 0.8 bar yields 6% direct shaft power savings across all 3 shifts.",
+    "actionSteps": [
+      "Lower main header pressure transmitter setpoint from 7.2 to 6.4 bar",
+      "Retune PID gain parameters on variable speed drive inverter",
+      "Monitor line pressure drop at furthest CNC cell to confirm 6.0 bar minimum"
+    ],
+    "applied": false
+  },
+  {
+    "id": "rec-03",
+    "title": "Interlock Paint Booth Exhaust Blowers with Automated Conveyor Photo-Eyes",
+    "machineName": "Paint Booth",
+    "category": "Automation",
+    "priority": "Medium",
+    "estimatedSavingsKwhPerMonth": 8600,
+    "estimatedSavingsCurrencyPerMonth": 61920,
+    "estimatedCarbonReductionTonsPerMonth": 7.1,
+    "paybackPeriodMonths": 1.2,
+    "roiPercent": 240,
+    "confidencePercent": 91.8,
+    "rationale": "Ventilation exhaust fans operate at 100% capacity (36 kW) during shift breaks and chassis inter-batch gaps, wasting roughly 4.2 hours of idle power daily.",
+    "actionSteps": [
+      "Deploy PLC logic block to drop VFD output to 20 Hz after 5 mins inactivity",
+      "Wire auxiliary relay from chassis entry optical sensor",
+      "Conduct smoke test to verify purge compliance within 45s of wake-up"
+    ],
+    "applied": false
+  },
+  {
+    "id": "rec-04",
+    "title": "Optimize Cooling Pump Impeller Trim & Open Throttled Discharge Valve",
+    "machineName": "Cooling Pump",
+    "category": "Maintenance",
+    "priority": "Medium",
+    "estimatedSavingsKwhPerMonth": 6200,
+    "estimatedSavingsCurrencyPerMonth": 44640,
+    "estimatedCarbonReductionTonsPerMonth": 5.1,
+    "paybackPeriodMonths": 2.1,
+    "roiPercent": 190,
+    "confidencePercent": 89.4,
+    "rationale": "Pump P-102 discharge butterfly valve is 32% throttled, creating 1.2 bar artificial head loss. Modulating pump motor speed via existing drive eliminates throttling dissipation.",
+    "actionSteps": [
+      "Open manual discharge butterfly valve to 100% full bore",
+      "Configure closed-loop differential pressure feedback to pump VFD",
+      "Confirm cooling tower basin level sensor calibration"
+    ],
+    "applied": true,
+    "appliedAt": "2026-10-23T11:00:00Z"
+  },
+  {
+    "id": "rec-05",
+    "title": "Phase-2 Rooftop Solar PV Expansion (250 kWp Addition)",
+    "machineName": "Substation TR-01",
+    "category": "Renewables",
+    "priority": "Low",
+    "estimatedSavingsKwhPerMonth": 36000,
+    "estimatedSavingsCurrencyPerMonth": 259200,
+    "estimatedCarbonReductionTonsPerMonth": 29.5,
+    "paybackPeriodMonths": 26.0,
+    "roiPercent": 46,
+    "confidencePercent": 95.0,
+    "rationale": "Unutilized Bay 4 & 5 rooftop structural capacity can host 580 high-efficiency TOPCon solar modules, offsetting 28% of daytime cooling tower and compressor electrical load.",
+    "actionSteps": [
+      "Submit structural roof load feasibility assessment to plant engineering",
+      "Issue RFP for 250 kWp grid-tied string inverters with zero-export limiter",
+      "Schedule net-metering interconnection approval with DISCOM"
+    ],
+    "applied": false
+  }
+]

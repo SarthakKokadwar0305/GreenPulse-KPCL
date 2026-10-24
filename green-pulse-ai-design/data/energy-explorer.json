@@ -1,0 +1,87 @@
+{
+  "currentDemandKw": 1556,
+  "contractedPeakLimitKw": 2500,
+  "peakHeadroomKw": 944,
+  "todayTotalKwh": 13010,
+  "estimatedDailyCost": 93672,
+  "hourlyTrend": [
+    { "hour": "00:00", "actualKw": 1140, "baselineKw": 1100, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "01:00", "actualKw": 1110, "baselineKw": 1090, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "02:00", "actualKw": 1160, "baselineKw": 1120, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "03:00", "actualKw": 1180, "baselineKw": 1130, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "04:00", "actualKw": 1240, "baselineKw": 1200, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "05:00", "actualKw": 1310, "baselineKw": 1280, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "06:00", "actualKw": 1450, "baselineKw": 1420, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "07:00", "actualKw": 1520, "baselineKw": 1490, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "08:00", "actualKw": 1640, "baselineKw": 1580, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "09:00", "actualKw": 1690, "baselineKw": 1650, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "10:00", "actualKw": 1710, "baselineKw": 1680, "tariffRate": 9.8, "isPeakTariff": true },
+    { "hour": "11:00", "actualKw": 1735, "baselineKw": 1700, "tariffRate": 9.8, "isPeakTariff": true },
+    { "hour": "12:00", "actualKw": 1580, "baselineKw": 1550, "tariffRate": 9.8, "isPeakTariff": true },
+    { "hour": "13:00", "actualKw": 1690, "baselineKw": 1660, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "14:00", "actualKw": 1740, "baselineKw": 1690, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "15:00", "actualKw": 1556, "baselineKw": 1600, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "16:00", "actualKw": 1520, "baselineKw": 1550, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "17:00", "actualKw": 1590, "baselineKw": 1580, "tariffRate": 7.2, "isPeakTariff": false },
+    { "hour": "18:00", "actualKw": 1780, "baselineKw": 1720, "tariffRate": 10.4, "isPeakTariff": true },
+    { "hour": "19:00", "actualKw": 1820, "baselineKw": 1750, "tariffRate": 10.4, "isPeakTariff": true },
+    { "hour": "20:00", "actualKw": 1790, "baselineKw": 1740, "tariffRate": 10.4, "isPeakTariff": true },
+    { "hour": "21:00", "actualKw": 1680, "baselineKw": 1640, "tariffRate": 10.4, "isPeakTariff": true },
+    { "hour": "22:00", "actualKw": 1390, "baselineKw": 1350, "tariffRate": 5.2, "isPeakTariff": false },
+    { "hour": "23:00", "actualKw": 1210, "baselineKw": 1180, "tariffRate": 5.2, "isPeakTariff": false }
+  ],
+  "dailyTrend": [
+    { "date": "18 Oct", "day": "Sun", "energyKwh": 18400, "cost": 132480, "targetKwh": 19000 },
+    { "date": "19 Oct", "day": "Mon", "energyKwh": 31200, "cost": 224640, "targetKwh": 32000 },
+    { "date": "20 Oct", "day": "Tue", "energyKwh": 32800, "cost": 236160, "targetKwh": 32500 },
+    { "date": "21 Oct", "day": "Wed", "energyKwh": 32100, "cost": 231120, "targetKwh": 32000 },
+    { "date": "22 Oct", "day": "Thu", "energyKwh": 33400, "cost": 240480, "targetKwh": 32500 },
+    { "date": "23 Oct", "day": "Fri", "energyKwh": 31900, "cost": 229680, "targetKwh": 32000 },
+    { "date": "24 Oct", "day": "Sat", "energyKwh": 26800, "cost": 192960, "targetKwh": 28000 }
+  ],
+  "weeklyTrend": [
+    { "week": "Wk 39", "energyKwh": 218000, "baselineKwh": 224000, "weekendRatioPercent": 18.2 },
+    { "week": "Wk 40", "energyKwh": 212500, "baselineKwh": 224000, "weekendRatioPercent": 17.5 },
+    { "week": "Wk 41", "energyKwh": 208400, "baselineKwh": 220000, "weekendRatioPercent": 17.1 },
+    { "week": "Wk 42", "energyKwh": 206200, "baselineKwh": 220000, "weekendRatioPercent": 16.8 }
+  ],
+  "monthlyTrend": [
+    { "month": "May 2026", "energyMwh": 924, "budgetMwh": 960, "costLaksh": 66.5 },
+    { "month": "Jun 2026", "energyMwh": 908, "budgetMwh": 940, "costLaksh": 65.4 },
+    { "month": "Jul 2026", "energyMwh": 895, "budgetMwh": 930, "costLaksh": 64.4 },
+    { "month": "Aug 2026", "energyMwh": 880, "budgetMwh": 920, "costLaksh": 63.3 },
+    { "month": "Sep 2026", "energyMwh": 862, "budgetMwh": 910, "costLaksh": 62.1 },
+    { "month": "Oct 2026 (MTD)", "energyMwh": 678, "budgetMwh": 900, "costLaksh": 48.8 }
+  ],
+  "machineComparison": [
+    { "machine": "Heat Furnace", "currentKw": 680, "energyKwh": 5310, "sharePercent": 40.8, "color": "var(--chart-1)" },
+    { "machine": "Air Compressor", "currentKw": 412, "energyKwh": 3420, "sharePercent": 26.3, "color": "var(--chart-2)" },
+    { "machine": "Assembly Line", "currentKw": 236, "energyKwh": 2150, "sharePercent": 16.5, "color": "var(--chart-3)" },
+    { "machine": "CNC Machine", "currentKw": 118, "energyKwh": 980, "sharePercent": 7.5, "color": "var(--chart-4)" },
+    { "machine": "Cooling Pump", "currentKw": 74, "energyKwh": 610, "sharePercent": 4.7, "color": "var(--chart-5)" },
+    { "machine": "Paint Booth", "currentKw": 36, "energyKwh": 540, "sharePercent": 4.2, "color": "#f9a825" }
+  ],
+  "departmentComparison": [
+    { "department": "Thermal Processing", "powerKw": 680, "sharePercent": 43.7, "costPerHour": 4896 },
+    { "department": "Utilities Block", "powerKw": 486, "sharePercent": 31.2, "costPerHour": 3499 },
+    { "department": "Final Assembly", "powerKw": 236, "sharePercent": 15.2, "costPerHour": 1699 },
+    { "department": "Machining Hall", "powerKw": 118, "sharePercent": 7.6, "costPerHour": 849 },
+    { "department": "Finishing Line", "powerKw": 36, "sharePercent": 2.3, "costPerHour": 259 }
+  ],
+  "peakDemandAnalytics": {
+    "peakTime": "14:15 Today",
+    "peakRecordedKw": 1740,
+    "penaltyThresholdKw": 2375,
+    "powerFactorAtPeak": 0.94,
+    "exceedanceRiskPercent": 4.2
+  },
+  "heatmap7x24": [
+    { "day": "Mon", "hours": [35, 34, 33, 38, 48, 62, 75, 82, 88, 92, 94, 95, 84, 89, 93, 86, 82, 85, 96, 98, 94, 88, 55, 42] },
+    { "day": "Tue", "hours": [36, 35, 34, 39, 50, 65, 78, 85, 90, 95, 96, 97, 86, 91, 95, 88, 85, 88, 97, 99, 96, 90, 58, 44] },
+    { "day": "Wed", "hours": [35, 34, 33, 38, 49, 64, 76, 84, 89, 93, 95, 96, 85, 90, 94, 87, 84, 86, 95, 97, 95, 89, 56, 43] },
+    { "day": "Thu", "hours": [37, 36, 35, 40, 52, 66, 79, 86, 91, 96, 98, 99, 88, 92, 96, 89, 86, 89, 98, 100, 97, 91, 60, 45] },
+    { "day": "Fri", "hours": [36, 35, 34, 39, 50, 63, 75, 83, 88, 92, 94, 95, 85, 89, 93, 86, 83, 85, 94, 96, 93, 87, 54, 40] },
+    { "day": "Sat", "hours": [30, 28, 28, 30, 36, 45, 55, 62, 68, 72, 74, 75, 66, 70, 74, 68, 65, 68, 76, 78, 75, 69, 44, 32] },
+    { "day": "Sun", "hours": [24, 22, 22, 24, 28, 32, 38, 44, 48, 52, 54, 55, 48, 50, 53, 49, 46, 48, 55, 58, 54, 48, 32, 26] }
+  ]
+}

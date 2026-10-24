@@ -1,0 +1,32 @@
+{
+  "defaultPlantId": "pune-01",
+  "plants": [
+    {
+      "id": "pune-01",
+      "name": "Aurora Pune Works",
+      "location": "Pune, Maharashtra",
+      "timezone": "Asia/Kolkata",
+      "currentShift": "Shift A"
+    },
+    {
+      "id": "chennai-02",
+      "name": "Aurora Chennai Works",
+      "location": "Chennai, Tamil Nadu",
+      "timezone": "Asia/Kolkata",
+      "currentShift": "Shift A"
+    },
+    {
+      "id": "ahmedabad-03",
+      "name": "Aurora Ahmedabad Works",
+      "location": "Ahmedabad, Gujarat",
+      "timezone": "Asia/Kolkata",
+      "currentShift": "Shift A"
+    }
+  ],
+  "user": {
+    "name": "Rohan Mehta",
+    "email": "rohan.mehta@aurora-industries.com",
+    "role": "Plant Operations Head",
+    "initials": "RM"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "platform": "GreenPulse AI Industrial Energy Platform",
+    "validation_timestamp": "2026-10-24T15:37:19.335308+00:00",
+    "environment": "production-validation",
+    "model_version": "1.2.0-prod",
+    "status": "PASSED"
+  },
+  "components": {
+    "model_registry": {
+      "status": "PASSED",
+      "loaded_models_count": 7,
+      "expected_models": [
+        "energy_forecast",
+        "cost_forecast",
+        "carbon_forecast",
+        "peak_forecast",
+        "anomaly_detector",
+        "scaler",
+        "encoder"
+      ],
+      "missing_models": [],
+      "singleton_verified": true,
+      "metadata_loaded": 7,
+      "latency_ms": 609.669
+    },
+    "threshold_engine": {
+      "status": "PASSED",
+      "normal_test_severity": "Normal",
+      "breach_test_severity": "Critical",
+      "breach_deviation_pct": 17.14,
+      "confidence": 0.9847,
+      "latency_ms": 0.221
+    },
+    "rule_engine": {
+      "status": "PASSED",
+      "total_domain_rules_registered": 60,
+      "triggered_rules_count": 6,
+      "triggered_rule_ids": [
+        "RULE-EE-003",
+        "RULE-EE-010",
+        "RULE-DM-031",
+        "RULE-DM-032",
+        "RULE-DM-033",
+        "RULE-DM-039"
+      ],
+      "latency_ms": 0.077
+    },
+    "alert_engine": {
+      "status": "PASSED",
+      "alerts_generated_count": 1,
+      "alert_types": [
+        "CONTRACT_DEMAND_CRITICAL"
+      ],
+      "highest_severity": "Emergency",
+      "latency_ms": 0.092
+    },
+    "forecast_api": {
+      "status": "PASSED",
+      "http_status": 200,
+      "horizon_hours": 24,
+      "shap_explanation_present": true,
+      "natural_language_summary": "Predicted energy consumption increased primarily driven by Equipment Nameplate Rating (kW), 1-Hour Rolling Mean Power (k",
+      "top_features_count": 4,
+      "confidence_score": 0.96,
+      "model_version": "1.2.0-prod",
+      "latency_ms": 265.556
+    },
+    "anomaly_api": {
+      "status": "PASSED",
+      "http_status": 200,
+      "incident_count": 2,
+      "sample_anomaly_score": 0.85,
+      "sample_root_cause": "Main air header discharge leak resulting in continuous loaded run during zero-production idle",
+      "sample_suggested_action": "Acoustic ultrasonic leak survey on Bay 2 manifold; inspect solenoid unloader valve",
+      "sample_threshold_violated": "Telemetry dynamic threshold exceeded (+18%)",
+      "latency_ms": 28.448
+    },
+    "recommendation_api": {
+      "status": "PASSED",
+      "http_status": 200,
+      "recommendation_count": 2,
+      "sample_title": "Retrofit Compressed Air Header with Closed-Loop VFD Modulation",
+      "sample_priority": "High",
+      "sample_business_explanation": "Executes strategy 'Retrofit Compressed Air Header with Closed-Loop VFD Modulation' saving \u20b969,120/mo.",
+      "sample_roi_percent": 185.0,
+      "latency_ms": 19.321
+    },
+    "simulator_api": {
+      "status": "PASSED",
+      "http_status": 200,
+      "predicted_energy_kwh": 38654.0,
+      "predicted_cost_inr": 231924.0,
+      "predicted_carbon_tons": 23.77,
+      "savings_inr": -164520.0,
+      "recommendation_summary": "Operating at 115% load across 18 runtime hours increases plant energy demand by +22.9%. Recommended to stagger high-power starts to avoid Maximum Demand Indicator (MDI) utility penalties.",
+      "latency_ms": 12.5
+    }
+  },
+  "benchmarks": {
+    "model_registry_lookup_ms": 609.669,
+    "threshold_engine_eval_ms": 0.221,
+    "rule_engine_eval_ms": 0.077,
+    "alert_engine_eval_ms": 0.092,
+    "forecast_api_inference_ms": 265.556,
+    "anomaly_api_inference_ms": 28.448,
+    "recommendation_api_latency_ms": 19.321,
+    "simulator_api_latency_ms": 12.5,
+    "average_api_latency_ms": 81.456
+  },
+  "summary": {
+    "total_components_validated": 8,
+    "passed_components": 8,
+    "failed_components": 0,
+    "overall_status": "PASSED"
+  }
+}

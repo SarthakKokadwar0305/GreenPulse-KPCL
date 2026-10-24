@@ -1,0 +1,84 @@
+{
+  "forecastRange": "Next 24 Hours",
+  "generatedAt": "2026-10-24T15:00:00Z",
+  "modelArchitecture": "Ensemble Temporal Fusion Transformer (TFT) + Prophet Regressor",
+  "r2Score": 0.968,
+  "projectedDayEnergyKwh": 31450,
+  "projectedCost": 226440,
+  "projectedCarbonTons": 25.79,
+  "projectedPeakDemandKw": 1820,
+  "peakHour": "19:00",
+  "hourlyForecast": [
+    { "time": "15:00", "actualKw": 1556, "forecastKw": 1560, "lowerBound80": 1510, "upperBound80": 1610, "lowerBound95": 1470, "upperBound95": 1650, "temperatureC": 31, "scheduledActivity": "Shift B regular operations" },
+    { "time": "16:00", "actualKw": 1520, "forecastKw": 1535, "lowerBound80": 1480, "upperBound80": 1590, "lowerBound95": 1440, "upperBound95": 1630, "temperatureC": 32, "scheduledActivity": "Cooling loop heat load stabilization" },
+    { "time": "17:00", "actualKw": null, "forecastKw": 1610, "lowerBound80": 1550, "upperBound80": 1670, "lowerBound95": 1500, "upperBound95": 1720, "temperatureC": 30, "scheduledActivity": null },
+    { "time": "18:00", "actualKw": null, "forecastKw": 1780, "lowerBound80": 1710, "upperBound80": 1850, "lowerBound95": 1660, "upperBound95": 1900, "temperatureC": 28, "scheduledActivity": "Furnace Zone 2 second cycle starts" },
+    { "time": "19:00", "actualKw": null, "forecastKw": 1820, "lowerBound80": 1740, "upperBound80": 1900, "lowerBound95": 1690, "upperBound95": 1950, "temperatureC": 27, "scheduledActivity": "High tariff window (18:00 - 22:00)" },
+    { "time": "20:00", "actualKw": null, "forecastKw": 1790, "lowerBound80": 1720, "upperBound80": 1860, "lowerBound95": 1670, "upperBound95": 1910, "temperatureC": 26, "scheduledActivity": null },
+    { "time": "21:00", "actualKw": null, "forecastKw": 1680, "lowerBound80": 1610, "upperBound80": 1750, "lowerBound95": 1560, "upperBound95": 1800, "temperatureC": 25, "scheduledActivity": "Shift B ramp down preparation" },
+    { "time": "22:00", "actualKw": null, "forecastKw": 1390, "lowerBound80": 1330, "upperBound80": 1450, "lowerBound95": 1280, "upperBound95": 1500, "temperatureC": 24, "scheduledActivity": "Shift changeover to Shift C (Night)" },
+    { "time": "23:00", "actualKw": null, "forecastKw": 1210, "lowerBound80": 1150, "upperBound80": 1270, "lowerBound95": 1100, "upperBound95": 1320, "temperatureC": 23, "scheduledActivity": "Off-peak tariff begins (₹5.20/kWh)" },
+    { "time": "00:00", "actualKw": null, "forecastKw": 1140, "lowerBound80": 1090, "upperBound80": 1190, "lowerBound95": 1040, "upperBound95": 1240, "temperatureC": 23, "scheduledActivity": "Heavy batch roughing scheduled" },
+    { "time": "01:00", "actualKw": null, "forecastKw": 1120, "lowerBound80": 1070, "upperBound80": 1170, "lowerBound95": 1020, "upperBound95": 1220, "temperatureC": 22, "scheduledActivity": null },
+    { "time": "02:00", "actualKw": null, "forecastKw": 1160, "lowerBound80": 1100, "upperBound80": 1220, "lowerBound95": 1050, "upperBound95": 1270, "temperatureC": 22, "scheduledActivity": null },
+    { "time": "03:00", "actualKw": null, "forecastKw": 1190, "lowerBound80": 1130, "upperBound80": 1250, "lowerBound95": 1080, "upperBound95": 1300, "temperatureC": 21, "scheduledActivity": null },
+    { "time": "04:00", "actualKw": null, "forecastKw": 1250, "lowerBound80": 1190, "upperBound80": 1310, "lowerBound95": 1140, "upperBound95": 1360, "temperatureC": 21, "scheduledActivity": "Compressor receiver pre-charge" },
+    { "time": "05:00", "actualKw": null, "forecastKw": 1320, "lowerBound80": 1250, "upperBound80": 1390, "lowerBound95": 1200, "upperBound95": 1440, "temperatureC": 22, "scheduledActivity": null },
+    { "time": "06:00", "actualKw": null, "forecastKw": 1460, "lowerBound80": 1390, "upperBound80": 1530, "lowerBound95": 1330, "upperBound95": 1590, "temperatureC": 23, "scheduledActivity": "Shift A morning startup" },
+    { "time": "07:00", "actualKw": null, "forecastKw": 1530, "lowerBound80": 1460, "upperBound80": 1600, "lowerBound95": 1400, "upperBound95": 1660, "temperatureC": 25, "scheduledActivity": null },
+    { "time": "08:00", "actualKw": null, "forecastKw": 1650, "lowerBound80": 1570, "upperBound80": 1730, "lowerBound95": 1510, "upperBound95": 1790, "temperatureC": 27, "scheduledActivity": "Full factory line synchronization" },
+    { "time": "09:00", "actualKw": null, "forecastKw": 1700, "lowerBound80": 1620, "upperBound80": 1780, "lowerBound95": 1560, "upperBound95": 1840, "temperatureC": 29, "scheduledActivity": "Solar inverter begins feed-in" },
+    { "time": "10:00", "actualKw": null, "forecastKw": 1720, "lowerBound80": 1640, "upperBound80": 1800, "lowerBound95": 1580, "upperBound95": 1860, "temperatureC": 31, "scheduledActivity": null },
+    { "time": "11:00", "actualKw": null, "forecastKw": 1740, "lowerBound80": 1660, "upperBound80": 1820, "lowerBound95": 1600, "upperBound95": 1880, "temperatureC": 33, "scheduledActivity": "Solar peak (340 kW generation)" },
+    { "time": "12:00", "actualKw": null, "forecastKw": 1590, "lowerBound80": 1520, "upperBound80": 1660, "lowerBound95": 1460, "upperBound95": 1720, "temperatureC": 34, "scheduledActivity": "Operator lunch break staggered" },
+    { "time": "13:00", "actualKw": null, "forecastKw": 1690, "lowerBound80": 1610, "upperBound80": 1770, "lowerBound95": 1550, "upperBound95": 1830, "temperatureC": 33, "scheduledActivity": null },
+    { "time": "14:00", "actualKw": null, "forecastKw": 1730, "lowerBound80": 1650, "upperBound80": 1810, "lowerBound95": 1590, "upperBound95": 1870, "temperatureC": 32, "scheduledActivity": "Shift B handover cycle" }
+  ],
+  "aiExplanation": {
+    "primaryDrivers": [
+      {
+        "factor": "Scheduled Furnace Batch Cycle",
+        "impactKw": "+140 kW",
+        "direction": "up",
+        "rationale": "MES production plan indicates secondary vacuum carburizing heating cycle between 18:00 and 20:30."
+      },
+      {
+        "factor": "Ambient Temperature Drop into Evening",
+        "impactKw": "-35 kW",
+        "direction": "down",
+        "rationale": "Cooling tower condensing water return temperature drops from 32°C to 26°C after 18:00, improving chiller lift efficiency."
+      },
+      {
+        "factor": "Shift C Light Load Profile",
+        "impactKw": "-490 kW",
+        "direction": "down",
+        "rationale": "Third shift runs non-finishing cells only, keeping paint booth and stamping off-line from 22:00 to 06:00."
+      }
+    ],
+    "modelConfidenceNote": "Model confidence is 96.8% based on historical correlation across 45 previous days with identical work-order scheduling and meteorological forecasts.",
+    "peakSpikeWarning": "Projected peak of 1,820 kW at 19:00 falls comfortably below 2,500 kW contractual demand threshold (680 kW margin)."
+  },
+  "timelineMilestones": [
+    {
+      "time": "18:00 - 22:00",
+      "event": "Time-of-Day (ToD) Peak Tariff Window",
+      "impact": "Electricity cost surges to ₹10.40/kWh (+44% surcharge).",
+      "recommendation": "Shift non-essential utility pumps and compressor purge to after 22:00.",
+      "severity": "warning"
+    },
+    {
+      "time": "22:00",
+      "event": "Off-Peak Tariff Transition",
+      "impact": "Tariff drops to baseline ₹5.20/kWh.",
+      "recommendation": "Activate heavy batch anneal ramping and automated material storage crane replenishment.",
+      "severity": "info"
+    },
+    {
+      "time": "10:30 - 13:30 (Tomorrow)",
+      "event": "Forecasted Solar Irradiance Window",
+      "impact": "Clear sky predicted; rooftop array will supply ~330 kW.",
+      "recommendation": "Coordinate peak machining cycles with maximum on-site solar generation.",
+      "severity": "normal"
+    }
+  ]
+}

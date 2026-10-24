@@ -1,0 +1,58 @@
+{
+  "todayTotalTons": 14.18,
+  "todayTargetTons": 16.5,
+  "monthToDateTons": 348.6,
+  "sustainabilityScore": 88,
+  "sustainabilityTier": "Leader (Tier A+)",
+  "scope1": {
+    "totalTons": 4.18,
+    "targetTons": 4.8,
+    "breakdown": [
+      { "source": "Natural Gas Thermal Furnace Burners", "tons": 3.42, "share": 81.8, "activityData": "1,140 Nm³ gas consumed" },
+      { "source": "Diesel Backup Generator (Weekly Test Run)", "tons": 0.48, "share": 11.5, "activityData": "180 Liters HSD fuel" },
+      { "source": "Facility Mobile Equipment & Forklifts", "tons": 0.28, "share": 6.7, "activityData": "94 kg LPG" }
+    ]
+  },
+  "scope2": {
+    "totalTons": 10.0,
+    "gridEmissionFactorKgPerKwh": 0.82,
+    "purchasedMwh": 13.01,
+    "renewableOffsetTons": 3.12,
+    "breakdown": [
+      { "source": "State Grid Electricity (MSEDCL 33kV)", "tons": 10.67, "share": 77.4 },
+      { "source": "Rooftop Solar PV Offset (Self-Generation)", "tons": -3.12, "share": -22.6 },
+      { "source": "Transmission & Distribution Line Losses", "tons": 0.45, "share": 3.3 }
+    ]
+  },
+  "monthlyTrend": [
+    { "month": "May 2026", "scope1": 138, "scope2": 342, "netTotal": 480, "target": 510 },
+    { "month": "Jun 2026", "scope1": 134, "scope2": 334, "netTotal": 468, "target": 500 },
+    { "month": "Jul 2026", "scope1": 131, "scope2": 326, "netTotal": 457, "target": 490 },
+    { "month": "Aug 2026", "scope1": 128, "scope2": 320, "netTotal": 448, "target": 480 },
+    { "month": "Sep 2026", "scope1": 122, "scope2": 312, "netTotal": 434, "target": 470 },
+    { "month": "Oct 2026 (MTD)", "scope1": 98, "scope2": 250, "netTotal": 348, "target": 460 }
+  ],
+  "byMachine": [
+    { "machine": "Heat Furnace", "carbonTons": 5.95, "intensityKgPerUnit": 4.02, "percent": 42.0 },
+    { "machine": "Air Compressor", "carbonTons": 3.42, "intensityKgPerUnit": 2.31, "percent": 24.1 },
+    { "machine": "Assembly Line", "carbonTons": 2.15, "intensityKgPerUnit": 1.45, "percent": 15.2 },
+    { "machine": "CNC Machine", "carbonTons": 1.13, "intensityKgPerUnit": 0.76, "percent": 8.0 },
+    { "machine": "Cooling Pump", "carbonTons": 0.85, "intensityKgPerUnit": 0.57, "percent": 6.0 },
+    { "machine": "Paint Booth", "carbonTons": 0.68, "intensityKgPerUnit": 0.46, "percent": 4.7 }
+  ],
+  "byDepartment": [
+    { "department": "Thermal Processing", "tons": 6.45, "sharePercent": 45.5 },
+    { "department": "Utilities Block", "tons": 4.27, "sharePercent": 30.1 },
+    { "department": "Final Assembly", "tons": 2.15, "sharePercent": 15.2 },
+    { "department": "Machining Hall", "tons": 1.13, "sharePercent": 8.0 },
+    { "department": "Finishing Line", "tons": 0.18, "sharePercent": 1.2 }
+  ],
+  "esgOverview": {
+    "environmentalIndex": 91.2,
+    "renewableEnergySharePercent": 22.4,
+    "waterRecycleRatioPercent": 74.8,
+    "wasteDivertedPercent": 92.6,
+    "griCompliance": "GRI 302 & 305 Full Assurance",
+    "brsrStatus": "SEBI BRSR Core Ready"
+  }
+}

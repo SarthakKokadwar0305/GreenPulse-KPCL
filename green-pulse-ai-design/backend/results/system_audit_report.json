@@ -1,0 +1,200 @@
+{
+  "dataset_validation": {
+    "unique_machines_count": 8,
+    "machine_ids": [
+      "CNC-01",
+      "CNC-02",
+      "COMP-01",
+      "COMP-02",
+      "FURN-01",
+      "HVAC-01",
+      "PAINT-01",
+      "PUMP-01"
+    ],
+    "machine_process_types": {
+      "CNC-01": "CNC machining",
+      "CNC-02": "CNC machining",
+      "COMP-01": "Air compressor",
+      "COMP-02": "Air compressor",
+      "FURN-01": "Heat treatment furnace",
+      "HVAC-01": "Ventilation HVAC",
+      "PAINT-01": "Paint booth",
+      "PUMP-01": "Coolant pump"
+    },
+    "machine_rated_power_kw": {
+      "CNC-01": 22,
+      "CNC-02": 18,
+      "COMP-01": 55,
+      "COMP-02": 45,
+      "FURN-01": 95,
+      "HVAC-01": 26,
+      "PAINT-01": 32,
+      "PUMP-01": 12
+    },
+    "total_valid_energy_kwh": 222791.59,
+    "total_ml_rows": 190609,
+    "shifts_present": [
+      "B",
+      "A",
+      "C"
+    ],
+    "shift_distribution": {
+      "B": 63744,
+      "A": 63648,
+      "C": 63217
+    },
+    "machine_state_distribution": {
+      "running": 95054,
+      "off": 63743,
+      "idle": 31380,
+      "maintenance": 432
+    },
+    "production_records_count": 720,
+    "departments_covered": [
+      "Precision Machining (CNC-01, CNC-02)",
+      "Utilities & Pneumatics (COMP-01, COMP-02)",
+      "Thermal Processing (FURN-01)",
+      "Facilities & HVAC (HVAC-01)",
+      "Surface Finishing (PAINT-01)",
+      "Utilities & Hydronics (PUMP-01)"
+    ]
+  },
+  "database_validation": {
+    "tables_present": [
+      "users",
+      "machines",
+      "carbon_emissions",
+      "reports",
+      "energy_readings",
+      "production",
+      "forecasts",
+      "anomalies",
+      "recommendations",
+      "simulation_history",
+      "maintenance_history"
+    ],
+    "table_row_counts": {
+      "users": 2,
+      "machines": 6,
+      "carbon_emissions": 0,
+      "reports": 0,
+      "energy_readings": 0,
+      "production": 0,
+      "forecasts": 0,
+      "anomalies": 2,
+      "recommendations": 2,
+      "simulation_history": 0,
+      "maintenance_history": 2
+    },
+    "machines_in_db_count": 6,
+    "machines_in_db": [
+      {
+        "id": "air-compressor",
+        "name": "Air Compressor 01",
+        "code": "COMP-01",
+        "rated_power_kw": 75.0,
+        "status": "warning"
+      },
+      {
+        "id": "heat-furnace",
+        "name": "Vacuum Heat Furnace",
+        "code": "FURN-01",
+        "rated_power_kw": 250.0,
+        "status": "running"
+      },
+      {
+        "id": "cnc-machine",
+        "name": "5-Axis CNC Milling Center",
+        "code": "CNC-01",
+        "rated_power_kw": 45.0,
+        "status": "running"
+      },
+      {
+        "id": "cooling-pump",
+        "name": "Chilled Water Pump #3",
+        "code": "PUMP-01",
+        "rated_power_kw": 45.0,
+        "status": "running"
+      },
+      {
+        "id": "paint-booth",
+        "name": "Automated Spray Paint Booth",
+        "code": "PAINT-01",
+        "rated_power_kw": 60.0,
+        "status": "running"
+      },
+      {
+        "id": "assembly-line",
+        "name": "High-Speed Robotic Assembly Cell",
+        "code": "ASSY-01",
+        "rated_power_kw": 90.0,
+        "status": "running"
+      }
+    ],
+    "missing_dataset_machines": [
+      "CNC-02",
+      "COMP-02",
+      "HVAC-01"
+    ],
+    "duplicate_machines": [],
+    "energy_readings_row_count": 0,
+    "anomalies_row_count": 2,
+    "recommendations_row_count": 2
+  },
+  "model_validation": {},
+  "api_validation": {},
+  "frontend_synchronization": {},
+  "machine_count_investigation": {
+    "actual_dataset_machines": 8,
+    "db_seeded_machines": 6,
+    "frontend_displayed_value": 18,
+    "root_cause_locations": [
+      {
+        "file": "data/dashboard.json",
+        "field": "Active Machines",
+        "value": 18,
+        "unit": "/ 24",
+        "description": "4 idle and 2 under maintenance"
+      },
+      {
+        "file": "data/plant-overview.json",
+        "field": "departments.machineCount sum",
+        "value": 20,
+        "detail": [
+          "Thermal Processing: 3 machines",
+          "Central Utilities Block: 4 machines",
+          "Final Assembly & Robotics: 6 machines",
+          "Precision CNC Machining: 5 machines",
+          "Finishing & Coating Bay: 2 machines"
+        ]
+      }
+    ],
+    "explanation": "The value '18' originates from mock fixture data/dashboard.json (line 39) where 'Active Machines' is hardcoded as value: 18 with unit: '/ 24'. Furthermore, data/plant-overview.json departmental machine counts sum to 20 machines (3+4+6+5+2). Because NEXT_PUBLIC_API_BASE_URL is not set in the Next.js frontend, the frontend's api-client falls back to loading data/dashboard.json directly, displaying 18 machines instead of the real dataset fleet (8 machines)."
+  },
+  "bugs_identified": [
+    {
+      "id": "BUG-DB-001",
+      "module": "Database Seeding",
+      "problem": "Database is missing 3 machines present in the dataset: ['CNC-02', 'COMP-02', 'HVAC-01']",
+      "cause": "seed_data.py only hardcoded 6 machines, omitting CNC-02, COMP-02, and HVAC-01.",
+      "impact": "Incomplete fleet visibility and incorrect aggregation in plant services.",
+      "priority": "HIGH"
+    },
+    {
+      "id": "BUG-DB-002",
+      "module": "Database Telemetry",
+      "problem": "energy_readings table has 0 rows; EnergyRepository falls back to static defaults.",
+      "cause": "Historical dataset telemetry was never populated into SQLite energy_readings table.",
+      "impact": "Dynamic database aggregations for today's energy and peak demand rely on mock fallbacks.",
+      "priority": "MEDIUM"
+    },
+    {
+      "id": "BUG-FE-001",
+      "module": "Frontend Data Synchronization",
+      "problem": "Application displays 18 machines instead of the dataset's actual machines.",
+      "cause": "data/dashboard.json hardcodes active-machines value to 18 (/ 24), and NEXT_PUBLIC_API_BASE_URL is unset.",
+      "impact": "Plant operators see synthetic 18/24 machine count disconnected from actual 8 dataset machines.",
+      "priority": "HIGH"
+    }
+  ]
+}

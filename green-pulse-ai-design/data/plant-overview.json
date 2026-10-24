@@ -1,0 +1,266 @@
+{
+  "plantId": "plant-pune-01",
+  "plantName": "Pune Heavy Machinery Plant #4",
+  "lastUpdated": "2026-10-24T15:10:00Z",
+  "kpis": [
+    {
+      "id": "kpi-oee",
+      "title": "Overall Equipment Effectiveness (OEE)",
+      "value": 84.6,
+      "decimals": 1,
+      "unit": "%",
+      "iconKey": "gauge",
+      "trend": { "value": 2.8, "direction": "up", "sentiment": "positive", "period": "vs last shift" },
+      "status": { "label": "World Class", "tone": "success" },
+      "description": "Availability 91.2%, Performance 94.8%, Quality 98.2%",
+      "sparkline": [78, 80, 82, 81, 83, 84, 85, 84.6]
+    },
+    {
+      "id": "kpi-demand",
+      "title": "Plant Power Demand",
+      "value": 1556,
+      "decimals": 0,
+      "unit": "kW",
+      "iconKey": "zap",
+      "trend": { "value": 1.2, "direction": "down", "sentiment": "positive", "period": "vs baseline" },
+      "status": { "label": "Within Band", "tone": "success" },
+      "description": "Contract limit 2,500 kW · Headroom 944 kW",
+      "sparkline": [1620, 1590, 1540, 1580, 1610, 1590, 1570, 1556]
+    },
+    {
+      "id": "kpi-sec",
+      "title": "Specific Energy Consumption (SEC)",
+      "value": 142.4,
+      "decimals": 1,
+      "unit": "kWh/ton",
+      "iconKey": "trending-up",
+      "trend": { "value": 4.1, "direction": "down", "sentiment": "positive", "period": "vs target" },
+      "status": { "label": "Optimal", "tone": "success" },
+      "description": "Target is 148.0 kWh/ton for Shift B steel throughput",
+      "sparkline": [152, 149, 147, 146, 144, 145, 143, 142.4]
+    },
+    {
+      "id": "kpi-carbon",
+      "title": "Daily Carbon Footprint",
+      "value": 14.18,
+      "decimals": 2,
+      "unit": "t CO₂e",
+      "iconKey": "leaf",
+      "trend": { "value": 6.4, "direction": "down", "sentiment": "positive", "period": "vs yesterday" },
+      "status": { "label": "On Track", "tone": "success" },
+      "description": "22% rooftop solar contribution offset 3.1 t CO₂e",
+      "sparkline": [16.8, 16.2, 15.7, 15.1, 14.8, 14.5, 14.3, 14.18]
+    }
+  ],
+  "productionSummary": {
+    "targetUnits": 1600,
+    "actualUnits": 1482,
+    "throughputRatePerHour": 185,
+    "firstPassYield": 98.6,
+    "downtimeMinutes": 18,
+    "activeLines": 5,
+    "totalLines": 5,
+    "hourlyThroughput": [
+      { "hour": "06:00", "target": 180, "actual": 172 },
+      { "hour": "07:00", "target": 190, "actual": 188 },
+      { "hour": "08:00", "target": 200, "actual": 195 },
+      { "hour": "09:00", "target": 200, "actual": 198 },
+      { "hour": "10:00", "target": 200, "actual": 202 },
+      { "hour": "11:00", "target": 190, "actual": 189 },
+      { "hour": "12:00", "target": 180, "actual": 174 },
+      { "hour": "13:00", "target": 200, "actual": 196 }
+    ]
+  },
+  "departments": [
+    {
+      "id": "dept-thermal",
+      "name": "Thermal Processing",
+      "zone": "Bay 3",
+      "powerKw": 680,
+      "energyTodayKwh": 5310,
+      "efficiency": 84,
+      "healthScore": 84,
+      "status": "normal",
+      "machineCount": 1
+    },
+    {
+      "id": "dept-utilities",
+      "name": "Central Utilities Block",
+      "zone": "Block A & B",
+      "powerKw": 486,
+      "energyTodayKwh": 4030,
+      "efficiency": 79,
+      "healthScore": 75,
+      "status": "warning",
+      "machineCount": 4
+    },
+    {
+      "id": "dept-assembly",
+      "name": "Final Assembly & Robotics",
+      "zone": "Hall 1",
+      "powerKw": 236,
+      "energyTodayKwh": 2150,
+      "efficiency": 96,
+      "healthScore": 98,
+      "status": "optimal",
+      "machineCount": 1
+    },
+    {
+      "id": "dept-machining",
+      "name": "Precision CNC Machining",
+      "zone": "Hall 2",
+      "powerKw": 118,
+      "energyTodayKwh": 980,
+      "efficiency": 93,
+      "healthScore": 94,
+      "status": "optimal",
+      "machineCount": 2
+    },
+    {
+      "id": "dept-finishing",
+      "name": "Finishing & Coating Bay",
+      "zone": "Bay 4",
+      "powerKw": 36,
+      "energyTodayKwh": 540,
+      "efficiency": 52,
+      "healthScore": 90,
+      "status": "normal",
+      "machineCount": 1
+    }
+  ],
+  "utilities": [
+    {
+      "id": "util-electric",
+      "name": "Main Electrical Feed (33kV)",
+      "currentRate": 1556,
+      "unit": "kW",
+      "capacity": 2500,
+      "utilizationPercent": 62.2,
+      "todayTotal": 13010,
+      "status": "normal"
+    },
+    {
+      "id": "util-air",
+      "name": "Compressed Air Ring (6.8 bar)",
+      "currentRate": 42.5,
+      "unit": "Nm³/min",
+      "capacity": 60.0,
+      "utilizationPercent": 70.8,
+      "todayTotal": 398,
+      "status": "peak"
+    },
+    {
+      "id": "util-water",
+      "name": "Process Cooling Water Loop",
+      "currentRate": 14.2,
+      "unit": "m³/h",
+      "capacity": 25.0,
+      "utilizationPercent": 56.8,
+      "todayTotal": 128,
+      "status": "normal"
+    },
+    {
+      "id": "util-gas",
+      "name": "Natural Gas Fuel Feed",
+      "currentRate": 48.0,
+      "unit": "Nm³/h",
+      "capacity": 80.0,
+      "utilizationPercent": 60.0,
+      "todayTotal": 412,
+      "status": "normal"
+    }
+  ],
+  "activeUtilities": [
+    {
+      "id": "u-01",
+      "name": "Rotary Screw Air Compressor A-01",
+      "type": "Compressed Air",
+      "powerKw": 412,
+      "loadFactor": 82.4,
+      "status": "warning",
+      "runtimeTodayHours": 9.2
+    },
+    {
+      "id": "u-02",
+      "name": "Centrifugal Cooling Tower Pump P-102",
+      "type": "Hydronic Cooling",
+      "powerKw": 74,
+      "loadFactor": 67.3,
+      "status": "running",
+      "runtimeTodayHours": 9.8
+    },
+    {
+      "id": "u-03",
+      "name": "Substation Main Transformer TR-01",
+      "type": "Power Distribution",
+      "powerKw": 840,
+      "loadFactor": 56.0,
+      "status": "running",
+      "runtimeTodayHours": 24.0
+    },
+    {
+      "id": "u-04",
+      "name": "Substation Auxiliary Transformer TR-02",
+      "type": "Power Distribution",
+      "powerKw": 716,
+      "loadFactor": 47.7,
+      "status": "running",
+      "runtimeTodayHours": 24.0
+    }
+  ],
+  "shift": {
+    "currentShift": "Shift B (Afternoon Production)",
+    "shiftCode": "SH-B",
+    "timeRange": "14:00 - 22:00",
+    "leadEngineer": "Elena Vance, CEM",
+    "leadRole": "Lead Shift Engineer & Certified Energy Auditor",
+    "operatorsOnFloor": 38,
+    "maintenanceTechs": 4,
+    "shiftEnergyBudgetKwh": 12500,
+    "shiftEnergyConsumedKwh": 8140,
+    "productionTarget": 1600,
+    "productionActual": 1482,
+    "elapsedPercent": 68
+  },
+  "timeline": [
+    {
+      "id": "t-1",
+      "time": "14:00",
+      "title": "Shift B Handover & Initial Meter Synchronization",
+      "category": "production",
+      "description": "Shift change completed with clean log. Peak demand baseline locked at 1,510 kW.",
+      "severity": "info"
+    },
+    {
+      "id": "t-2",
+      "time": "14:45",
+      "title": "Heat Furnace Batch Annealing Cycle #2 Initiated",
+      "category": "production",
+      "description": "Ramp to 850°C completed in 28 mins; power stabilized at 680 kW.",
+      "severity": "info"
+    },
+    {
+      "id": "t-3",
+      "time": "15:20",
+      "title": "Air Compressor Stage-2 Valve Leakage Alert Triggered",
+      "category": "maintenance",
+      "description": "Unload power elevated by 24 kW above normal idle baseline. Assigned to shift tech.",
+      "severity": "warning"
+    },
+    {
+      "id": "t-4",
+      "time": "16:15",
+      "title": "Rooftop Solar PV Inverter Peak Output (342 kW)",
+      "category": "grid",
+      "description": "Solar generation supplied 22.4% of total instantaneous plant demand.",
+      "severity": "success"
+    }
+  ],
+  "healthSummary": {
+    "healthIndex": 91.4,
+    "predictiveRisk": 8.6,
+    "uptimePercent": 99.1,
+    "complianceStatus": "GRI 302/305 Compliant",
+    "iso50001Status": "Certified (Audit Valid through May 2027)"
+  }
+}

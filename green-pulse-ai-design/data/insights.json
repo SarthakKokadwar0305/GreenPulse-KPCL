@@ -1,0 +1,66 @@
+{
+  "engine": "GreenPulse Forecast v2.4",
+  "generatedAt": "2026-10-24T10:40:00+05:30",
+  "insights": [
+    {
+      "id": "ins-morning-shift",
+      "category": "Consumption anomaly",
+      "iconKey": "trending-up",
+      "severity": "warning",
+      "title": "Morning shift energy usage is up 9%",
+      "summary": "Energy usage increased by 9% during the morning shift due to prolonged compressor runtime.",
+      "confidence": 94,
+      "evidence": [
+        { "label": "Compressor runtime", "value": "+38 min vs baseline" },
+        { "label": "Average shift load", "value": "2,436 kW vs 2,235 kW" },
+        { "label": "Unloaded running time", "value": "14% of runtime" }
+      ],
+      "action": { "label": "Investigate", "href": "/anomaly-center" }
+    },
+    {
+      "id": "ins-peak-demand",
+      "category": "Demand forecast",
+      "iconKey": "gauge",
+      "severity": "warning",
+      "title": "Peak demand expected at 2 PM",
+      "summary": "Peak demand is expected between 2 PM and 3 PM, approaching the contracted demand limit.",
+      "confidence": 88,
+      "evidence": [
+        { "label": "Forecast peak", "value": "2,720 kW" },
+        { "label": "Contract demand", "value": "94% utilised" },
+        { "label": "Primary driver", "value": "Furnace and compressor overlap" }
+      ],
+      "action": { "label": "View forecast", "href": "/ai-forecast-center" }
+    },
+    {
+      "id": "ins-assembly-optimal",
+      "category": "Performance",
+      "iconKey": "badge-check",
+      "severity": "success",
+      "title": "Assembly Line is running at its best",
+      "summary": "Assembly Line is operating at optimal efficiency with energy use below its target for the shift.",
+      "confidence": 97,
+      "evidence": [
+        { "label": "Efficiency", "value": "96% vs 90% target" },
+        { "label": "Specific energy", "value": "0.84 kWh per unit" },
+        { "label": "Health score", "value": "98 / 100" }
+      ],
+      "action": { "label": "Inspect in twin", "href": "/digital-twin" }
+    },
+    {
+      "id": "ins-idle-savings",
+      "category": "Optimisation",
+      "iconKey": "piggy-bank",
+      "severity": "info",
+      "title": "₹18,500 monthly savings available",
+      "summary": "Estimated monthly savings of ₹18,500 can be achieved by reducing idle machine time.",
+      "confidence": 86,
+      "evidence": [
+        { "label": "Idle machines", "value": "4 averaging 38 min" },
+        { "label": "Standby draw", "value": "212 kW" },
+        { "label": "Shift handover share", "value": "62% of idle time" }
+      ],
+      "action": { "label": "See recommendation", "href": "/recommendation-center" }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "alt-1008",
+    "severity": "info",
+    "title": "AI recommendation available for idle-time reduction",
+    "machine": "Plant-wide",
+    "occurredAt": "2026-10-24T09:22:00+05:30",
+    "status": "open"
+  },
+  {
+    "id": "alt-1007",
+    "severity": "info",
+    "title": "Scheduled maintenance completed and verified",
+    "machine": "CNC Machine",
+    "occurredAt": "2026-10-24T10:05:00+05:30",
+    "status": "resolved"
+  },
+  {
+    "id": "alt-1006",
+    "severity": "critical",
+    "title": "Discharge pressure above safe operating threshold",
+    "machine": "Air Compressor",
+    "occurredAt": "2026-10-24T09:14:00+05:30",
+    "status": "open"
+  },
+  {
+    "id": "alt-1005",
+    "severity": "warning",
+    "title": "Energy draw 18% above baseline during ramp-up",
+    "machine": "Heat Furnace",
+    "occurredAt": "2026-10-24T09:15:00+05:30",
+    "status": "investigating"
+  },
+  {
+    "id": "alt-1004",
+    "severity": "warning",
+    "title": "Bearing vibration trending upward",
+    "machine": "Cooling Pump",
+    "occurredAt": "2026-10-24T08:52:00+05:30",
+    "status": "acknowledged"
+  },
+  {
+    "id": "alt-1003",
+    "severity": "warning",
+    "title": "Machine idle for 42 minutes with standby load",
+    "machine": "Paint Booth",
+    "occurredAt": "2026-10-24T08:41:00+05:30",
+    "status": "open"
+  },
+  {
+    "id": "alt-1002",
+    "severity": "critical",
+    "title": "Zone 3 over-temperature event cleared",
+    "machine": "Heat Furnace",
+    "occurredAt": "2026-10-24T07:48:00+05:30",
+    "status": "resolved"
+  },
+  {
+    "id": "alt-1001",
+    "severity": "info",
+    "title": "Power factor correction bank engaged",
+    "machine": "Power Grid",
+    "occurredAt": "2026-10-24T07:20:00+05:30",
+    "status": "resolved"
+  }
+]

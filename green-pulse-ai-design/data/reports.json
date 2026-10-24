@@ -1,0 +1,114 @@
+{
+  "recentReports": [
+    {
+      "id": "rep-01",
+      "title": "Executive Daily Energy & Demand Audit - Shift B",
+      "category": "energy",
+      "period": "24 Oct 2026",
+      "generatedAt": "2026-10-24T14:30:00Z",
+      "author": "System AI Audit Agent",
+      "fileSize": "2.4 MB",
+      "status": "ready",
+      "summaryStats": [
+        { "label": "Total Energy", "value": "13,010 kWh" },
+        { "label": "Peak Recorded", "value": "1,740 kW" },
+        { "label": "Power Factor", "value": "0.94" },
+        { "label": "Compliance", "value": "100%" }
+      ]
+    },
+    {
+      "id": "rep-02",
+      "title": "GHG Protocol Scope 1 & Scope 2 Compliance Pack",
+      "category": "carbon",
+      "period": "October 2026 (MTD)",
+      "generatedAt": "2026-10-24T06:00:00Z",
+      "author": "Elena Vance (CEM)",
+      "fileSize": "4.8 MB",
+      "status": "ready",
+      "summaryStats": [
+        { "label": "Total Emissions", "value": "348.6 t CO₂e" },
+        { "label": "Renewable Offset", "value": "22.4%" },
+        { "label": "Specific Carbon", "value": "0.18 kg/unit" },
+        { "label": "Audit Standard", "value": "ISO 14064" }
+      ]
+    },
+    {
+      "id": "rep-03",
+      "title": "7-Day AI Machine Learning Energy & Peak Forecast",
+      "category": "forecast",
+      "period": "25 Oct - 31 Oct 2026",
+      "generatedAt": "2026-10-24T12:00:00Z",
+      "author": "GreenPulse TFT Engine v2.4",
+      "fileSize": "3.1 MB",
+      "status": "ready",
+      "summaryStats": [
+        { "label": "Forecasted MWh", "value": "218.4 MWh" },
+        { "label": "Expected Peak", "value": "1,840 kW" },
+        { "label": "Cost Projection", "value": "₹15.8 Lakh" },
+        { "label": "Model R²", "value": "0.968" }
+      ]
+    },
+    {
+      "id": "rep-04",
+      "title": "Critical Plant Anomaly Incident & RCA Summary",
+      "category": "anomaly",
+      "period": "Last 14 Days",
+      "generatedAt": "2026-10-24T09:15:00Z",
+      "author": "Reliability Engineering Group",
+      "fileSize": "1.8 MB",
+      "status": "ready",
+      "summaryStats": [
+        { "label": "Open Anomalies", "value": "2" },
+        { "label": "Resolved Anomalies", "value": "8" },
+        { "label": "Mean Resolution Time", "value": "42 mins" },
+        { "label": "Avoided Loss", "value": "₹4.2 Lakh" }
+      ]
+    }
+  ],
+  "scheduledReports": [
+    {
+      "id": "sch-01",
+      "name": "Daily Shift B Energy Audit Digest",
+      "frequency": "Daily",
+      "sendTime": "22:15 IST",
+      "recipients": ["shift-leads@greenpulse.ai", "v.sharma@greenpulse.ai"],
+      "format": "PDF",
+      "category": "Energy",
+      "active": true,
+      "lastSent": "Yesterday, 22:15"
+    },
+    {
+      "id": "sch-02",
+      "name": "Weekly Executive ESG & Decarbonization Pack",
+      "frequency": "Weekly",
+      "sendTime": "Mondays 08:00 IST",
+      "recipients": ["vp-operations@greenpulse.ai", "esg-board@greenpulse.ai"],
+      "format": "PDF",
+      "category": "Carbon",
+      "active": true,
+      "lastSent": "20 Oct 2026"
+    },
+    {
+      "id": "sch-03",
+      "name": "Monthly Peak Demand & Tariff Penalty Audit",
+      "frequency": "Monthly",
+      "sendTime": "1st of month 09:00 IST",
+      "recipients": ["finance-energy@greenpulse.ai"],
+      "format": "Excel",
+      "category": "Energy",
+      "active": true,
+      "lastSent": "01 Oct 2026"
+    },
+    {
+      "id": "sch-04",
+      "name": "Realtime AI Anomaly Work-Order Dispatch",
+      "frequency": "Daily",
+      "sendTime": "Instant Trigger",
+      "recipients": ["maintenance-team@greenpulse.ai"],
+      "format": "CSV",
+      "category": "Anomaly",
+      "active": true,
+      "lastSent": "Today, 13:42"
+    }
+  ]
+}

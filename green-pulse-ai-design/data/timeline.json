@@ -1,0 +1,56 @@
+[
+  {
+    "id": "evt-1005",
+    "time": "2026-10-24T10:05:00+05:30",
+    "title": "Maintenance Completed",
+    "description": "Spindle calibration finished and CNC Machine returned to service.",
+    "iconKey": "wrench",
+    "tone": "success",
+    "source": "Maintenance"
+  },
+  {
+    "id": "evt-0922",
+    "time": "2026-10-24T09:22:00+05:30",
+    "title": "Recommendation Generated",
+    "description": "Stagger compressor loading to cut unloaded runtime.",
+    "iconKey": "lightbulb",
+    "tone": "info",
+    "source": "AI Engine"
+  },
+  {
+    "id": "evt-0918",
+    "time": "2026-10-24T09:18:00+05:30",
+    "title": "AI Analysis Completed",
+    "description": "Root cause traced to prolonged Air Compressor runtime.",
+    "iconKey": "sparkles",
+    "tone": "info",
+    "source": "AI Engine"
+  },
+  {
+    "id": "evt-0915",
+    "time": "2026-10-24T09:15:00+05:30",
+    "title": "Energy Spike Detected",
+    "description": "Plant demand peaked at 2,620 kW, 10% above baseline.",
+    "iconKey": "triangle-alert",
+    "tone": "warning",
+    "source": "Anomaly Detection"
+  },
+  {
+    "id": "evt-0835",
+    "time": "2026-10-24T08:35:00+05:30",
+    "title": "Compressor Activated",
+    "description": "Air Compressor started a full-load cycle.",
+    "iconKey": "power",
+    "tone": "neutral",
+    "source": "Utilities"
+  },
+  {
+    "id": "evt-0800",
+    "time": "2026-10-24T08:00:00+05:30",
+    "title": "Shift Started",
+    "description": "Shift A began with 142 operators on site.",
+    "iconKey": "clock",
+    "tone": "neutral",
+    "source": "Operations"
+  }
+]

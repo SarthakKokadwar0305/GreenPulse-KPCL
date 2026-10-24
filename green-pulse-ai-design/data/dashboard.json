@@ -1,0 +1,243 @@
+{
+  "kpis": [
+    {
+      "id": "total-energy",
+      "title": "Total Energy Consumption",
+      "value": 17748,
+      "unit": "kWh",
+      "iconKey": "zap",
+      "trend": { "value": 4.2, "direction": "up", "sentiment": "negative", "comparison": "vs yesterday" },
+      "status": { "tone": "warning", "label": "Above baseline" },
+      "description": "Cumulative since midnight",
+      "sparkline": [1120, 1090, 1075, 1068, 1085, 1160, 1620, 2050, 2410, 2620, 2450, 2380, 2436, 2436]
+    },
+    {
+      "id": "power-demand",
+      "title": "Current Power Demand",
+      "value": 2436,
+      "unit": "kW",
+      "iconKey": "gauge",
+      "trend": { "value": 3.1, "direction": "up", "sentiment": "neutral", "comparison": "vs last hour" },
+      "status": { "tone": "success", "label": "Within limit" },
+      "description": "84% of 2,900 kW contract demand",
+      "sparkline": [2210, 2260, 2310, 2290, 2340, 2380, 2350, 2410, 2440, 2420, 2398, 2415, 2428, 2436]
+    },
+    {
+      "id": "energy-cost",
+      "title": "Today's Energy Cost",
+      "value": 141984,
+      "prefix": "₹",
+      "iconKey": "indian-rupee",
+      "trend": { "value": 3.6, "direction": "up", "sentiment": "negative", "comparison": "vs yesterday" },
+      "status": { "tone": "success", "label": "On budget" },
+      "description": "Blended tariff of ₹8.00 per kWh",
+      "sparkline": [8960, 8720, 8600, 8544, 8680, 9280, 12960, 16400, 19280, 20960, 19600, 19040, 19488, 19488]
+    },
+    {
+      "id": "active-machines",
+      "title": "Active Machines",
+      "value": 8,
+      "unit": "/ 9",
+      "iconKey": "cog",
+      "trend": { "value": 8.3, "direction": "up", "sentiment": "positive", "comparison": "vs last shift" },
+      "status": { "tone": "success", "label": "On production plan" },
+      "description": "1 idle and 0 under maintenance",
+      "sparkline": [7, 7, 8, 8, 8, 7, 8, 8, 8, 8, 8, 8, 8, 8]
+    },
+    {
+      "id": "plant-efficiency",
+      "title": "Plant Efficiency",
+      "value": 91.4,
+      "decimals": 1,
+      "unit": "%",
+      "iconKey": "activity",
+      "trend": { "value": 1.8, "direction": "up", "sentiment": "positive", "comparison": "vs last week" },
+      "status": { "tone": "success", "label": "Above target" },
+      "description": "Target 90.0% · monthly best 93.2%",
+      "sparkline": [88.6, 89.1, 89.4, 90.2, 89.8, 90.6, 90.9, 91.2, 90.8, 91.5, 91.1, 91.6, 91.3, 91.4]
+    },
+    {
+      "id": "carbon-emissions",
+      "title": "Carbon Emissions",
+      "value": 12.6,
+      "decimals": 1,
+      "unit": "tCO₂e",
+      "iconKey": "leaf",
+      "trend": { "value": 4.2, "direction": "up", "sentiment": "negative", "comparison": "vs yesterday" },
+      "status": { "tone": "success", "label": "Within budget" },
+      "description": "70% of the 18.0 t daily budget",
+      "sparkline": [0.8, 1.5, 2.3, 3.0, 3.9, 4.7, 6.1, 7.6, 9.2, 10.9, 11.7, 12.2, 12.5, 12.6]
+    },
+    {
+      "id": "active-alerts",
+      "title": "Active Alerts",
+      "value": 5,
+      "iconKey": "bell-ring",
+      "trend": { "value": 16.7, "direction": "down", "sentiment": "positive", "comparison": "vs yesterday" },
+      "status": { "tone": "danger", "label": "1 critical" },
+      "description": "1 critical · 3 warning · 1 info",
+      "sparkline": [2, 3, 3, 2, 4, 3, 4, 5, 6, 5, 6, 5, 5, 5]
+    },
+    {
+      "id": "predicted-savings",
+      "title": "Predicted Savings",
+      "value": 18500,
+      "prefix": "₹",
+      "unit": "/ month",
+      "iconKey": "piggy-bank",
+      "trend": { "value": 12.4, "direction": "up", "sentiment": "positive", "comparison": "vs last estimate" },
+      "status": { "tone": "info", "label": "Opportunity" },
+      "description": "Idle-time and compressor optimisation",
+      "sparkline": [12.1, 12.8, 13.4, 13.2, 14.6, 15.1, 15.9, 16.4, 16.8, 17.2, 17.6, 18.0, 18.3, 18.5]
+    }
+  ],
+  "plantStatus": [
+    {
+      "id": "factory-status",
+      "title": "Factory Status",
+      "value": "Healthy",
+      "caption": "All critical systems nominal",
+      "iconKey": "shield-check",
+      "tone": "success"
+    },
+    {
+      "id": "machines-running",
+      "title": "Machines Running",
+      "value": "8",
+      "caption": "89% of 9 installed machines",
+      "iconKey": "circle-play",
+      "tone": "success"
+    },
+    {
+      "id": "machines-idle",
+      "title": "Machines Idle",
+      "value": "1",
+      "caption": "Paint Booth standby idle",
+      "iconKey": "circle-pause",
+      "tone": "warning"
+    },
+    {
+      "id": "machines-maintenance",
+      "title": "Under Maintenance",
+      "value": "0",
+      "caption": "All systems nominal (0 under maintenance)",
+      "iconKey": "wrench",
+      "tone": "info"
+    },
+    {
+      "id": "current-shift",
+      "title": "Current Shift",
+      "value": "Shift A",
+      "caption": "08:00 – 16:00 · 142 operators on site",
+      "iconKey": "users",
+      "tone": "neutral"
+    },
+    {
+      "id": "power-grid",
+      "title": "Power Grid Status",
+      "value": "Stable",
+      "caption": "49.98 Hz · Power factor 0.96",
+      "iconKey": "plug-zap",
+      "tone": "success"
+    },
+    {
+      "id": "carbon-status",
+      "title": "Carbon Status",
+      "value": "Within Budget",
+      "caption": "12.6 of 18.0 tCO₂e daily budget",
+      "iconKey": "leaf",
+      "tone": "success",
+      "progress": 70
+    },
+    {
+      "id": "health-score",
+      "title": "Overall Health Score",
+      "value": "92 / 100",
+      "caption": "Up 2 points from last week",
+      "iconKey": "heart-pulse",
+      "tone": "success",
+      "progress": 92
+    }
+  ],
+  "energyTrend": {
+    "today": [
+      { "label": "00:00", "actual": 1120, "baseline": 1100, "forecast": null },
+      { "label": "01:00", "actual": 1090, "baseline": 1080, "forecast": null },
+      { "label": "02:00", "actual": 1075, "baseline": 1070, "forecast": null },
+      { "label": "03:00", "actual": 1068, "baseline": 1070, "forecast": null },
+      { "label": "04:00", "actual": 1085, "baseline": 1090, "forecast": null },
+      { "label": "05:00", "actual": 1160, "baseline": 1150, "forecast": null },
+      { "label": "06:00", "actual": 1620, "baseline": 1560, "forecast": null },
+      { "label": "07:00", "actual": 2050, "baseline": 1960, "forecast": null },
+      { "label": "08:00", "actual": 2410, "baseline": 2300, "forecast": null },
+      { "label": "09:00", "actual": 2620, "baseline": 2380, "forecast": null },
+      { "label": "10:00", "actual": 2450, "baseline": 2400, "forecast": 2450 },
+      { "label": "11:00", "actual": null, "baseline": 2420, "forecast": 2490 },
+      { "label": "12:00", "actual": null, "baseline": 2380, "forecast": 2510 },
+      { "label": "13:00", "actual": null, "baseline": 2300, "forecast": 2330 },
+      { "label": "14:00", "actual": null, "baseline": 2440, "forecast": 2690 },
+      { "label": "15:00", "actual": null, "baseline": 2520, "forecast": 2720 },
+      { "label": "16:00", "actual": null, "baseline": 2400, "forecast": 2540 },
+      { "label": "17:00", "actual": null, "baseline": 2200, "forecast": 2280 },
+      { "label": "18:00", "actual": null, "baseline": 1900, "forecast": 1990 },
+      { "label": "19:00", "actual": null, "baseline": 1650, "forecast": 1720 },
+      { "label": "20:00", "actual": null, "baseline": 1450, "forecast": 1510 },
+      { "label": "21:00", "actual": null, "baseline": 1300, "forecast": 1350 },
+      { "label": "22:00", "actual": null, "baseline": 1200, "forecast": 1240 },
+      { "label": "23:00", "actual": null, "baseline": 1150, "forecast": 1170 }
+    ],
+    "week": [
+      { "label": "Oct 17", "actual": 31200, "baseline": 32000, "forecast": null },
+      { "label": "Oct 18", "actual": 29800, "baseline": 31000, "forecast": null },
+      { "label": "Oct 19", "actual": 46200, "baseline": 46500, "forecast": null },
+      { "label": "Oct 20", "actual": 47850, "baseline": 46800, "forecast": null },
+      { "label": "Oct 21", "actual": 48400, "baseline": 47000, "forecast": null },
+      { "label": "Oct 22", "actual": 47100, "baseline": 46900, "forecast": null },
+      { "label": "Oct 23", "actual": 46650, "baseline": 46800, "forecast": null }
+    ]
+  },
+  "quickActions": [
+    {
+      "id": "generate-report",
+      "title": "Generate Report",
+      "description": "Executive energy and sustainability summary",
+      "iconKey": "file-bar-chart",
+      "href": "/reports"
+    },
+    {
+      "id": "open-digital-twin",
+      "title": "Open Digital Twin",
+      "description": "Explore the live 3D plant model",
+      "iconKey": "boxes",
+      "href": "/digital-twin"
+    },
+    {
+      "id": "run-simulation",
+      "title": "Run What-if Simulation",
+      "description": "Test schedule and load scenarios",
+      "iconKey": "flask-conical",
+      "href": "/what-if-simulator"
+    },
+    {
+      "id": "energy-forecast",
+      "title": "Energy Forecast",
+      "description": "48-hour AI demand prediction",
+      "iconKey": "trending-up",
+      "href": "/ai-forecast-center"
+    },
+    {
+      "id": "carbon-report",
+      "title": "Carbon Report",
+      "description": "Scope 1 and 2 emissions breakdown",
+      "iconKey": "leaf",
+      "href": "/carbon-accounting"
+    }
+  ],
+  "system": {
+    "version": "1.4.2",
+    "backend": { "tone": "success", "label": "Operational", "detail": "FastAPI gateway responding in 42 ms" },
+    "aiEngine": { "tone": "success", "label": "Active", "detail": "Forecast model v2.4 serving predictions" },
+    "lastSyncedAt": "2026-10-24T10:42:08+05:30",
+    "latencyMs": 42
+  }
+}

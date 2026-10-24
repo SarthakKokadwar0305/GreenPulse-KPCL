@@ -1,0 +1,112 @@
+{
+  "model_architecture": "XGBoost Histogram Regressor",
+  "training_timestamp": "2026-10-24T13:31:29Z",
+  "random_state": 42,
+  "input_features_count": 34,
+  "target_metrics": {
+    "target_energy_kwh": {
+      "task": "Energy Consumption",
+      "target_column": "target_energy_kwh",
+      "unit": "kWh",
+      "training_time_seconds": 1.14,
+      "train": {
+        "r2": 0.7103,
+        "mae": 0.4514,
+        "rmse": 0.7809,
+        "mape_pct": 436.37
+      },
+      "validation": {
+        "r2": 0.6621,
+        "mae": 0.4791,
+        "rmse": 0.8736,
+        "mape_pct": 464.56
+      },
+      "test": {
+        "r2": 0.6468,
+        "mae": 0.4747,
+        "rmse": 0.8608,
+        "mape_pct": 468.55
+      },
+      "generalization_status": "Moderate Variance",
+      "overfitting_gap_r2": 0.0635
+    },
+    "target_cost_inr": {
+      "task": "Electricity Cost",
+      "target_column": "target_cost_inr",
+      "unit": "INR",
+      "training_time_seconds": 1.11,
+      "train": {
+        "r2": 0.7281,
+        "mae": 3.5746,
+        "rmse": 6.3868,
+        "mape_pct": 591.5
+      },
+      "validation": {
+        "r2": 0.6661,
+        "mae": 3.8173,
+        "rmse": 7.2427,
+        "mape_pct": 710.67
+      },
+      "test": {
+        "r2": 0.6664,
+        "mae": 3.7763,
+        "rmse": 7.0879,
+        "mape_pct": 665.36
+      },
+      "generalization_status": "Moderate Variance",
+      "overfitting_gap_r2": 0.0617
+    },
+    "target_carbon_kg": {
+      "task": "Carbon Emissions",
+      "target_column": "target_carbon_kg",
+      "unit": "kg CO2e",
+      "training_time_seconds": 1.05,
+      "train": {
+        "r2": 0.7103,
+        "mae": 0.3701,
+        "rmse": 0.6403,
+        "mape_pct": 423.58
+      },
+      "validation": {
+        "r2": 0.6621,
+        "mae": 0.3929,
+        "rmse": 0.7163,
+        "mape_pct": 449.2
+      },
+      "test": {
+        "r2": 0.6468,
+        "mae": 0.3892,
+        "rmse": 0.7058,
+        "mape_pct": 441.45
+      },
+      "generalization_status": "Moderate Variance",
+      "overfitting_gap_r2": 0.0635
+    },
+    "target_peak_kw": {
+      "task": "Peak Demand",
+      "target_column": "target_peak_kw",
+      "unit": "kW",
+      "training_time_seconds": 1.05,
+      "train": {
+        "r2": 0.7103,
+        "mae": 5.4166,
+        "rmse": 9.3707,
+        "mape_pct": 639.89
+      },
+      "validation": {
+        "r2": 0.6621,
+        "mae": 5.7493,
+        "rmse": 10.483,
+        "mape_pct": 684.08
+      },
+      "test": {
+        "r2": 0.6468,
+        "mae": 5.696,
+        "rmse": 10.3295,
+        "mape_pct": 668.89
+      },
+      "generalization_status": "Moderate Variance",
+      "overfitting_gap_r2": 0.0635
+    }
+  }
+}

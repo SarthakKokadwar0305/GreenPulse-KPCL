@@ -1,0 +1,5 @@
+data_quality,rows,pct_of_all_rows
+invalid_negative,24,0.011574074074074075
+missing,72,0.034722222222222224
+sensor_stuck,96,0.0462962962962963
+valid,207168,99.9074074074074

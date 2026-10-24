@@ -1,0 +1,52 @@
+{
+  "dataset_type": "synthetic only; not KPCL measurements",
+  "input_energy_rows": 207360,
+  "unique_machines": 8,
+  "start_timestamp_local": "2026-07-01 00:00:00+05:30",
+  "end_timestamp_local": "2026-09-28 23:55:00+05:30",
+  "data_quality_counts": {
+    "invalid_negative": 24,
+    "missing": 72,
+    "sensor_stuck": 96,
+    "valid": 207168
+  },
+  "valid_reading_pct": 99.9074,
+  "total_valid_energy_kwh": 222791.59,
+  "machine_energy_rank_top3": [
+    {
+      "machine_id": "FURN-01",
+      "energy_kwh": 59046.74
+    },
+    {
+      "machine_id": "COMP-01",
+      "energy_kwh": 49764.8
+    },
+    {
+      "machine_id": "COMP-02",
+      "energy_kwh": 39127.17
+    }
+  ],
+  "injected_event_count": 9,
+  "production_efficiency_note": "kWh/good unit is only meaningful on days with positive good-unit output; machine processes differ and should not be compared blindly.",
+  "emissions_note": "Scope 1/2 emissions not calculated because emission_factors.csv intentionally has no verified factors.",
+  "tariff_note": "Tariffs are illustrative synthetic values, not KPCL tariff data.",
+  "ml_split_method": "Chronological timestamp split: 70% train, 15% validation, 15% test; valid quality rows only; lag features use past observations.",
+  "ml_feature_rows": 190609,
+  "split_boundaries": {
+    "train_end_exclusive": "2026-09-03 20:50:00+00:00",
+    "validation_end_exclusive": "2026-09-16 07:35:00+00:00"
+  },
+  "split_rows": {
+    "train": 133326,
+    "test": 28664,
+    "validation": 28619
+  },
+  "charts": [
+    "01_machine_energy_consumption.png",
+    "02_daily_plant_energy.png",
+    "03_hourly_power_patterns.png",
+    "04_data_quality_counts.png",
+    "05_anomaly_event_windows.png",
+    "06_production_efficiency.png"
+  ]
+}
