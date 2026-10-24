@@ -46,11 +46,12 @@ services:
       - PORT=8000
       - QDRANT_URL=http://qdrant:6333
       - DATABASE_URL=sqlite+aiosqlite:///./greenpulse.db
-      - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://frontend:3000
+      - 'CORS_ORIGINS=["http://localhost:3000","http://127.0.0.1:3000","http://frontend:3000"]'
       - OLLAMA_BASE_URL=http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
+      - ./green-pulse-ai-design/services:/app/services:ro
       - backend_uploads:/app/uploaded_documents
       - backend_storage:/app/qdrant_storage
     depends_on:

@@ -52,7 +52,7 @@ class Settings(BaseSettings):
     DOCUMENTS_DIR: str = "./knowledge_documents"
 
     # CORS
-    CORS_ORIGINS: List[str] = [
+    CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
