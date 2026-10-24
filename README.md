@@ -4,6 +4,7 @@
 [![Next.js Version](https://img.shields.io/badge/Next.js-16.4.3-black.svg?logo=next.js)](https://nextjs.org/)
 [![FastAPI Framework](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Vector DB](https://img.shields.io/badge/Qdrant-v1.12.0-DC2626.svg?logo=qdrant)](https://qdrant.tech/)
+[![RAG Pipeline](https://img.shields.io/badge/RAG-Qdrant%20%2B%20BAAI%2Fbge--m3-purple.svg)]()
 [![Local LLM](https://img.shields.io/badge/Ollama-Qwen%203%208B%20%2F%20Gemma%203-FF6B6B.svg)](https://ollama.com/)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20Hexagonal-brightgreen.svg)]()
 [![Compliance](https://img.shields.io/badge/Compliance-ISO%2050001%20%7C%20GHG%20Scope%201%20%26%202%20%7C%20IEEE%20519-orange.svg)]()
@@ -53,7 +54,161 @@ graph TB
 
 ---
 
-## 2. Key Modules & Capabilities
+## 2. 🧠 Industrial RAG (Retrieval-Augmented Generation) & GenAI Copilot
+
+GreenPulse AI features an industrial-grade **Retrieval-Augmented Generation (RAG)** pipeline purpose-built for heavy manufacturing and utility operations. It guarantees zero-hallucination operational advice by grounding every response in verified factory Standard Operating Procedures (SOPs), machine OEM manuals, and compliance standards while injecting live SCADA Modbus telemetry registers directly into the context window.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Operator / Plant Head
+    participant UI as Copilot UI (Next.js)
+    participant Core as Copilot Orchestrator
+    participant SCADA as SCADA Engine
+    participant Qdrant as Qdrant Vector DB
+    participant LLM as Ollama (Qwen 3 8B)
+
+    User->>UI: "Why is Compressor COMP-01 critical?"
+    UI->>Core: POST /api/v1/copilot/chat {query, session_id}
+    
+    par Live SCADA Telemetry
+        Core->>SCADA: Fetch live registers for COMP-01 (kW, °C, mm/s RMS)
+        SCADA-->>Core: {power: 412kW, temp: 86°C, vib: 0.0mm/s, status: "warning"}
+    and Vector Similarity Search
+        Core->>Core: Embed query using BAAI/bge-m3 (384-dim)
+        Core->>Qdrant: Hybrid search across 8 collections (min_score=0.32, top_k=4)
+        Qdrant-->>Core: Top matching chunks (Comp 01 OEM Manual p.4, SOP-01 p.3)
+    end
+
+    Core->>Core: Assemble Grounded Industrial Prompt (Live SCADA + RAG Chunks + Persona)
+    Core->>LLM: POST /api/generate (system_prompt, user_prompt, options)
+    LLM-->>Core: Generated Response (Markdown + Recommendations)
+    Core->>Core: Strip thinking tags, deduplicate citations, format provenance
+    Core-->>UI: ApiResponse (Structured Markdown + Document Citations + Model Used)
+    UI-->>User: Rendered Response with Citations & OEM Manual Badges
+```
+
+### 📚 Partitioned Vector Knowledge Collections (Qdrant)
+The knowledge base is partitioned into **8 distinct collections** in Qdrant, containing **67+ pre-indexed vector points** with support for on-demand document ingestion:
+
+| Collection Name | Title | Chunks | Description & Indexed Sources |
+|---|---|---|---|
+| `company_sops` | Company SOPs | 12 | Plant Peak Demand Curtailment (`SOP-01`), Power Factor Correction (`SOP-02`), Stage 1/2/3 load shedding. |
+| `machine_manuals` | Machine Manuals | 11 | OEM manuals for Rotary Screw Compressors (`COMP-01`), Arc Furnaces, CNC Milling Centers, EDT alarm codes. |
+| `government_schemes` | Government Schemes | 6 | BEE PAT Scheme Cycle VI, Specific Energy Consumption (SEC) targets, ESCerts compliance and trading. |
+| `iso_50001` | ISO 50001 Documents | 5 | Energy Management Systems, Energy Performance Indicators (EnPI), Energy Baselines (EnB), SEU identification. |
+| `maintenance_docs` | Maintenance Docs | 4 | ISO 10816 vibration severity limits (Zones A–D), predictive bearing maintenance, lubrication schedules. |
+| `energy_policies` | Energy Policies | 4 | Plant #4 Net-Zero Roadmap, renewable procurement norms, BRSR compliance guidelines. |
+| `industrial_standards`| Industrial Standards | 5 | IEEE 519-2022 harmonic voltage distortion limits ($THD < 5\%$), power factor penalty thresholds ($PF < 0.95$). |
+| `uploaded_pdfs` | Uploaded Documents | 20+ | Dynamic on-demand ingestion: *GreenPulse Plant 4 Master Operational Manual.pdf*, custom user manuals. |
+
+### 🛠️ Key RAG Features
+1. **Dynamic Live Modbus Fusion**: When an operator queries equipment status, live electrical draw (kW), bearing temperatures (°C), and vibration (mm/s RMS) from the Digital Twin are automatically injected alongside the OEM manual troubleshooting section.
+2. **Transparent Provenance & Citation Tracking**: Every response references the exact document title, page number, section heading, and similarity score percentage. Citations are deduplicated by `(document, page)`.
+3. **Local GenAI with Zero Cloud Dependency**: Driven by local **Ollama (`qwen3:8b`)**, running completely on-premise without external API keys or cloud data exposure.
+4. **Resilient Dual-Engine Fallback**: If the local LLM is undergoing model loading or offline, the backend's deterministic **Grounded Industrial Synthesis Engine** immediately formats the retrieved RAG manual excerpts and live SCADA registers, ensuring 100% operational uptime.
+5. **Thinking Tag Elimination**: Automatically filters internal reasoning tags (`<think>...</think>`) produced by thinking models (such as Qwen 3 or DeepSeek), delivering crisp, structured Markdown sections:
+   - `### Summary`
+   - `### Detailed Explanation`
+   - `### OEM Manual & Operational Protocols`
+   - `### Recommended Actions`
+   - `### Sources & Data Provenance`
+
+---
+
+## 3. 🐳 Complete Docker & Container Architecture
+
+GreenPulse AI is distributed as an enterprise-grade, multi-container Docker Compose microservices stack designed for high availability, isolated networking, and persistent data storage.
+
+```
+                      ┌────────────────────────────────────────┐
+                      │          Host Machine Ports            │
+                      └───────┬──────────────┬──────────┬──────┘
+                              │              │          │
+                              ▼ :3000        ▼ :8000    ▼ :6333
+┌────────────────────────────────────────────────────────────────────────┐
+│  Docker Bridge Network: greenpulse-network                             │
+│                                                                        │
+│   ┌────────────────────────┐         ┌──────────────────────────────┐  │
+│   │  greenpulse-frontend   │         │     greenpulse-backend       │  │
+│   │  (Next.js 16.4.3)      ├────────►│     (FastAPI 0.115+)         │  │
+│   │  Turbopack / Node 20   │ HTTP    │     Python 3.11-slim         │  │
+│   └────────────────────────┘         └──────────────┬───────────────┘  │
+│                                                     │                  │
+│                                                     ▼ HTTP             │
+│                                      ┌──────────────────────────────┐  │
+│                                      │     greenpulse-qdrant        │  │
+│                                      │     (Qdrant v1.12.0)         │  │
+│                                      │     Vector Database          │  │
+│                                      └──────────────┬───────────────┘  │
+└─────────────────────────────────────────────────────┼──────────────────┘
+                                                      │
+                                                      ▼ Host Gateway
+                                       ┌──────────────────────────────┐
+                                       │ host.docker.internal:11434   │
+                                       │ (Local Ollama LLM Daemon)    │
+                                       └──────────────────────────────┘
+```
+
+### 📦 Services & Container Matrix
+
+| Container Name | Base Image | Host Port | Internal Port | Healthcheck | Purpose |
+|---|---|---|---|---|---|
+| `greenpulse-frontend` | `node:20-alpine` | `3000:3000` | `3000` | Process exit / HTTP 200 | Next.js 16 Web Dashboard, Copilot UI, Recharts, Turbopack |
+| `greenpulse-backend` | `python:3.11-slim`| `8000:8000` | `8000` | `curl -f http://localhost:8000/health` | FastAPI core, ML engines, RAG pipeline, SQLite/PostgreSQL |
+| `greenpulse-qdrant` | `qdrant/qdrant:v1.12.0`| `6333:6333`<br>`6334:6334` | `6333` (HTTP)<br>`6334` (gRPC) | TCP socket connect on `6333` | Vector database storing 8 collections & 67+ knowledge chunks |
+
+### 💾 Persistent Volumes
+- `greenpulse_qdrant_storage`: Retains vector indexes, point payloads, and collection configurations across container restarts.
+- `greenpulse_backend_uploads`: Persists uploaded operational manuals, PDFs, and user documents.
+- `greenpulse_backend_storage`: Stores embedded sqlite database files, audit logs, and cache.
+
+### 🚀 One-Command Docker Commands
+
+#### 1. Start the entire platform in the background:
+```bash
+docker compose up --build -d
+```
+
+#### 2. Check container status & healthchecks:
+```bash
+docker compose ps
+```
+*Expected output: All 3 containers in `Up (healthy)` state.*
+
+#### 3. View unified real-time logs:
+```bash
+# All services:
+docker compose logs -f
+
+# Backend only:
+docker compose logs -f backend
+
+# Frontend only:
+docker compose logs -f frontend
+
+# Qdrant only:
+docker compose logs -f qdrant
+```
+
+#### 4. Restart individual microservices:
+```bash
+docker compose restart backend
+docker compose restart frontend
+```
+
+#### 5. Stop the stack:
+```bash
+# Stop containers (preserves volumes and data):
+docker compose down
+
+# Stop containers and remove all persistent volumes (fresh reset):
+docker compose down -v
+```
+
+---
+
+## 4. Key Platform Modules & Capabilities
 
 ### ⚡ Executive Industrial Dashboard
 - **Real-Time KPIs**: Live facility power demand, active machine counts, daily cumulative consumption (kWh), power factor, and blended electricity costs.
@@ -79,20 +234,6 @@ graph TB
 - **Scope 2 (Indirect)**: Purchased grid electricity calculated using official Central Electricity Authority (CEA) grid emission factors ($0.82\text{ kg CO}_2\text{e/kWh}$).
 - **Renewable Displacement**: Real-time rooftop solar PV offset accounting and BRSR / ISO 50001 audit export reports.
 
-### 🤖 Industrial AI Copilot (Qdrant RAG + Local Ollama LLM)
-- **Enterprise Vector Knowledge Hub**: 8 partitioned collections indexed in Qdrant:
-  1. `company_sops`: Peak demand curtailment, power factor penalty mitigation.
-  2. `machine_manuals`: OEM manuals, critical fault codes (EDT, motor unbalance).
-  3. `government_schemes`: BEE PAT Cycle VI, ESCerts trading rules.
-  4. `iso_50001`: Energy Performance Indicators (EnPI) and Significant Energy Uses (SEUs).
-  5. `maintenance_docs`: ISO 10816 vibration severity guidelines and PM intervals.
-  6. `energy_policies`: Factory net-zero roadmap, procurement standards.
-  7. `industrial_standards`: IEEE 519 harmonic limits, power quality norms.
-  8. `uploaded_pdfs`: On-demand PDF/DOCX/TXT document ingestion with automatic text splitting and embedding generation.
-- **Grounding & Persona**: Powered by local `qwen3:8b` (with Gemma 3 fallback) via Ollama. Fuses live SCADA telemetry registers directly into context.
-- **Strict Provenance**: Generates transparent document citations with exact document title, page numbers, and vector similarity relevance percentages.
-- **Resilient Fallback Engine**: If the local LLM is offline, a deterministic industrial synthesis engine extracts relevant manual excerpts and live telemetry registers so operations never stall.
-
 ### 🛡️ Enterprise Role-Based Access Control (RBAC)
 - **4 Hierarchical Roles**:
   - `PLANT_HEAD`: Full factory visibility, capital ECM approvals, financial budgets, and executive exports.
@@ -103,7 +244,7 @@ graph TB
 
 ---
 
-## 3. Technology Stack
+## 5. Technology Stack
 
 | Layer | Component | Description |
 |---|---|---|
@@ -112,14 +253,14 @@ graph TB
 | **Backend API** | FastAPI 0.115+ | Python 3.11/3.12, Clean Architecture, Pydantic v2 validation |
 | **ORM & DB** | SQLAlchemy 2.0 (Async) | Supports SQLite (frictionless development) and PostgreSQL (`asyncpg`) |
 | **Vector Database** | Qdrant v1.12.0 | High-performance vector search engine partitioned across 8 collections |
-| **Embeddings** | HuggingFace BAAI/bge-m3 | 384-dim semantic embeddings for technical documents and manual diagrams |
+| **RAG Embeddings** | HuggingFace BAAI/bge-m3 | 384-dim semantic embeddings for technical documents and manual diagrams |
 | **Local LLM** | Ollama (`qwen3:8b`) | Local inference with zero external cloud dependencies or API keys required |
 | **Machine Learning** | Scikit-learn & Joblib | Isolation Forest anomaly detection, compressed model artifacts |
 | **Containerization** | Docker Compose | Multi-container microservices network with persistent volume storage |
 
 ---
 
-## 4. Directory Structure
+## 6. Directory Structure
 
 ```
 GreenPulse-KPCL/
@@ -179,7 +320,7 @@ GreenPulse-KPCL/
 
 ---
 
-## 5. Quick Start with Docker (Recommended)
+## 7. Quick Start & Execution
 
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (v24.0+ recommended)
@@ -188,69 +329,31 @@ GreenPulse-KPCL/
   ollama run qwen3:8b
   ```
 
-### 1. Launch Full Stack
+### 1. Launch Full Stack with Docker
 From the project root directory, run:
 ```bash
 docker compose up --build -d
 ```
 
-Docker Compose will automatically:
-1. Initialize the **Qdrant Vector Database** on port `6333` and verify health.
-2. Build and launch the **FastAPI AI Backend** on port `8000`, seed database tables, generate embeddings, and index 67 industrial knowledge chunks across 8 Qdrant collections.
-3. Build and launch the **Next.js 16 Production Frontend** on port `3000`.
-
 ### 2. Access the Application
-| Service | URL | Credentials / Notes |
+| Service | URL | Description |
 |---|---|---|
-| **Web Dashboard** | [http://localhost:3000](http://localhost:3000) | Full UI & Consoles |
-| **AI Copilot** | [http://localhost:3000/copilot](http://localhost:3000/copilot) | Natural Language RAG Assistant |
-| **API Documentation** | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive Swagger UI |
-| **API Health Check** | [http://localhost:8000/health](http://localhost:8000/health) | Backend & Database Status |
+| **Web Dashboard** | [http://localhost:3000](http://localhost:3000) | Full Industrial UI & Operations Consoles |
+| **AI Copilot (RAG)** | [http://localhost:3000/copilot](http://localhost:3000/copilot) | Natural Language Industrial Assistant |
+| **API Documentation** | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive Swagger UI API Docs |
+| **API Health Check** | [http://localhost:8000/health](http://localhost:8000/health) | Backend & Database Status Probe |
 | **Qdrant Vector DB** | [http://localhost:6333/dashboard](http://localhost:6333/dashboard) | Web Vector Collection Viewer |
 
-### 3. Pre-Configured Test Accounts
-Use the user switcher in the top navigation bar or authenticate with:
-- **Plant Head**: `plant_head` (Full access across all plant metrics)
-- **Energy Manager**: `energy_manager` (Tariffs, ECM recommendations, carbon tracking)
+### 3. Pre-Configured Test Roles
+Use the role selector in the top bar or sign in with:
+- **Plant Head**: `plant_head` (Full plant-wide visibility, financial budgets, approvals)
+- **Energy Manager**: `energy_manager` (Tariffs, ECM recommendations, carbon accounting)
 - **Maintenance Manager**: `maintenance_manager` (Machine twins, vibration, alert triage)
-- **Operator**: `operator_lead` (Scoped exclusively to assigned machines)
+- **Operator**: `operator_lead` (Scoped exclusively to assigned production machinery)
 
 ---
 
-## 6. Local Development (Without Docker)
-
-### Backend Setup
-```bash
-cd green-pulse-ai-design/backend
-
-# Create and activate virtual environment
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start backend server
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### Frontend Setup
-```bash
-cd green-pulse-ai-design
-
-# Install dependencies
-npm install --legacy-peer-deps
-
-# Start Next.js development server
-npm run dev
-```
-
----
-
-## 7. Compliance & Standards Adherence
+## 8. Compliance & Standards Adherence
 
 - **ISO 50001:2018**: Standardized Energy Baselines (EnB) and Energy Performance Indicators (EnPI) tracked per production bay.
 - **GHG Protocol Corporate Standard**: Accurate Scope 1 (Direct Fuel) and Scope 2 (Location-Based Grid Electricity) carbon footprint quantification.
@@ -260,7 +363,7 @@ npm run dev
 
 ---
 
-## 8. License & Acknowledgments
+## 9. License & Acknowledgments
 
 Developed for the **KPCL Hackathon 2026**.
 Architected for industrial reliability, explainable manufacturing operations, and real-time energy decarbonization.
