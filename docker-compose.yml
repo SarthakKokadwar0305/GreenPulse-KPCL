@@ -3,8 +3,6 @@
 # Architecture: Next.js Frontend + FastAPI AI Backend + Qdrant Vector DB
 # ==============================================================================
 
-version: '3.8'
-
 services:
   # ----------------------------------------------------------------------------
   # 1. Qdrant Vector Database (Industrial RAG & SOP Vector Storage)
@@ -33,6 +31,7 @@ services:
   # 2. GreenPulse Backend (FastAPI, Scikit-learn ML Models & Industrial RAG)
   # ----------------------------------------------------------------------------
   backend:
+    image: greenpulse-backend:latest
     build:
       context: ./green-pulse-ai-design/backend
       dockerfile: Dockerfile
@@ -64,6 +63,7 @@ services:
   # 3. GreenPulse Frontend (Next.js 16 Production Web UI & Dashboard)
   # ----------------------------------------------------------------------------
   frontend:
+    image: greenpulse-frontend:latest
     build:
       context: ./green-pulse-ai-design
       dockerfile: Dockerfile
