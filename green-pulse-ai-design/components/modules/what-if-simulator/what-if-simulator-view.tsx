@@ -62,6 +62,7 @@ import {
 import { useSimulatorBaselineData } from '@/hooks/use-module-data'
 import { formatNumber } from '@/lib/format'
 import { exportAuditDocument } from '@/lib/export-utils'
+import { useSimulationSyncStore } from '@/store/simulation-sync-store'
 
 const simChartConfig = {
   baselineKw: { label: 'Baseline Load (kW)', color: 'var(--chart-2)' },
@@ -70,13 +71,35 @@ const simChartConfig = {
 
 export function WhatIfSimulatorView() {
   const { data: baseline, isLoading, isError } = useSimulatorBaselineData()
+  const { plantState, setPlantState } = useSimulationSyncStore()
 
-  // Simulator Interactive Inputs
-  const [productionLoad, setProductionLoad] = useState<number>(100) // % 50 - 150
-  const [machineRuntime, setMachineRuntime] = useState<number>(16) // hrs 4 - 24
-  const [shiftSchedule, setShiftSchedule] = useState<'1-shift' | '2-shift' | '3-shift' | 'night-shift'>('2-shift')
-  const [baseTariff, setBaseTariff] = useState<number>(7.20) // ₹/kWh 4 - 15
-  const [renewablePercent, setRenewablePercent] = useState<number>(22) // % 0 - 100
+  // Simulator Interactive Inputs synchronized with Digital Twin
+  const productionLoad = plantState.productionLoad
+  const machineRuntime = plantState.machineRuntime
+  const shiftSchedule = plantState.shiftSchedule
+  const baseTariff = plantState.baseTariff
+  const renewablePercent = plantState.renewablePercent
+
+  const setProductionLoad = (val: number | ((prev: number) => number)) => {
+    const nextVal = typeof val === 'function' ? val(productionLoad) : val
+    setPlantState({ productionLoad: nextVal }, 'plant')
+  }
+  const setMachineRuntime = (val: number | ((prev: number) => number)) => {
+    const nextVal = typeof val === 'function' ? val(machineRuntime) : val
+    setPlantState({ machineRuntime: nextVal }, 'plant')
+  }
+  const setShiftSchedule = (val: '1-shift' | '2-shift' | '3-shift' | 'night-shift' | ((prev: any) => any)) => {
+    const nextVal = typeof val === 'function' ? val(shiftSchedule) : val
+    setPlantState({ shiftSchedule: nextVal }, 'plant')
+  }
+  const setBaseTariff = (val: number | ((prev: number) => number)) => {
+    const nextVal = typeof val === 'function' ? val(baseTariff) : val
+    setPlantState({ baseTariff: nextVal }, 'plant')
+  }
+  const setRenewablePercent = (val: number | ((prev: number) => number)) => {
+    const nextVal = typeof val === 'function' ? val(renewablePercent) : val
+    setPlantState({ renewablePercent: nextVal }, 'plant')
+  }
 
   if (isLoading || !baseline) {
     return (
@@ -220,6 +243,11 @@ export function WhatIfSimulatorView() {
             <span>Current Daily Cost: <strong className="text-foreground">₹2,26,440</strong></span>
             <span>•</span>
             <span>Baseline Carbon: <strong className="text-foreground">25.79 t CO₂e</strong></span>
+            {plantState.lastUpdatedFrom === 'machine' && (
+              <Badge variant="outline" className="text-emerald-400 border-emerald-500/40 bg-emerald-500/10 text-[10px] gap-1 ml-1">
+                <Sparkles className="size-2.5 animate-pulse" /> Synced with Digital Twin Machine Fleet
+              </Badge>
+            )}
           </div>
         }
         actions={

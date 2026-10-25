@@ -36,8 +36,8 @@
     },
     "anomaly_detector": {
       "filename": "anomaly_detector.joblib",
-      "sha256": "a4015d52ed52d85310c65991820d440fd93023a136259293d64b7bac25d254a2",
-      "size_bytes": 210439289,
+      "sha256": "0a7c0a254ca1866add0589e795c8bade5f246ea5d1f76462d8f61b6702c6784f",
+      "size_bytes": 60370869,
       "status": "LOADED"
     },
     "scaler": {

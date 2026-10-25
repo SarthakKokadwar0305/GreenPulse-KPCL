@@ -14,6 +14,9 @@ from app.schemas.common import ApiResponse
 from app.schemas.simulation import (
     SimulationRequest,
     SimulationResponse,
+    MachineSimulationRequest,
+    MachineSimulationResponse,
+    SimulationTimelineEntry,
 )
 from app.services.simulator_service import SimulatorService
 
@@ -89,3 +92,55 @@ async def compare_scenarios(
     service = SimulatorService(db)
     results = await service.compare_multiple(scenarios)
     return ApiResponse.ok(data=results, message=f"Simulated {len(results)} scenario permutations")
+
+
+@router.post(
+    "/machine",
+    response_model=ApiResponse[MachineSimulationResponse],
+    summary="Run Interactive Machine Digital Twin Simulation",
+    description="Evaluates machine parametric variations (State, Runtime, Load, Motor Speed, Temp, Voltage, Current, Power Factor, Renewable %, Condition) and outputs real-time predictions, explanations, and prescriptive insights."
+)
+@router.post(
+    "/machine/simulate",
+    response_model=ApiResponse[MachineSimulationResponse],
+    include_in_schema=False,
+)
+async def simulate_machine(
+    request: MachineSimulationRequest,
+    current_user: User = Depends(require_permissions("VIEW_MACHINE", "VIEW_SIMULATOR")),
+    db: AsyncSession = Depends(get_db)
+) -> ApiResponse[MachineSimulationResponse]:
+    service = SimulatorService(db)
+    result = await service.simulate_machine(request)
+    return ApiResponse.ok(data=result, message=f"Digital twin simulation for {request.machine_id} completed")
+
+
+@router.post(
+    "/machine/history",
+    response_model=ApiResponse[SimulationTimelineEntry],
+    summary="Append Digital Twin Simulation Run to Timeline Audit",
+)
+async def record_simulation_history(
+    entry: SimulationTimelineEntry,
+    current_user: User = Depends(require_permissions("VIEW_SIMULATOR")),
+    db: AsyncSession = Depends(get_db)
+) -> ApiResponse[SimulationTimelineEntry]:
+    service = SimulatorService(db)
+    saved = await service.record_simulation_timeline(entry)
+    return ApiResponse.ok(data=saved, message="Simulation run logged to audit timeline")
+
+
+@router.get(
+    "/machine/history",
+    response_model=ApiResponse[List[SimulationTimelineEntry]],
+    summary="Get Digital Twin Simulation Timeline Audit",
+)
+async def get_simulation_history(
+    limit: int = 25,
+    current_user: User = Depends(require_permissions("VIEW_SIMULATOR")),
+    db: AsyncSession = Depends(get_db)
+) -> ApiResponse[List[SimulationTimelineEntry]]:
+    service = SimulatorService(db)
+    entries = await service.get_simulation_timeline(limit=limit)
+    return ApiResponse.ok(data=entries, message=f"Retrieved {len(entries)} timeline events")
+
